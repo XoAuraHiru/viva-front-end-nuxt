@@ -2091,6 +2091,8 @@ body::-webkit-scrollbar-thumb {
 }
 .item__cover img {
   width: 100%;
+  height: 280px;
+  object-fit: cover;
   position: relative;
   z-index: 1;
 }

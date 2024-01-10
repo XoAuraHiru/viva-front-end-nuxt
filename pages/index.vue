@@ -4,8 +4,8 @@
 
 <template>
   <div>
-    <h1>T</h1>
     <SliderBase/>
+    <HomeContent/>
   </div>
 </template>
 
