@@ -3,12 +3,12 @@ import axios from 'axios';
 
 let NewMovies = ref([]);
 let AllMovies = ref([]);
+let isLoading = ref(true)
 
 axios.get('https://xoaurahiru.com/api/movies/new')
     .then(response => {
         NewMovies.value = response.data.data
-        console.log(NewMovies)
-        console.log(response.data);
+        isLoading.value = false
     })
     .catch(error => {
         console.log(error);
@@ -17,8 +17,6 @@ axios.get('https://xoaurahiru.com/api/movies/new')
 axios.get('https://xoaurahiru.com/api/movies')
     .then(response => {
         AllMovies.value = response.data.data
-        console.log(NewMovies)
-        console.log(response.data);
     })
     .catch(error => {
         console.log(error);
@@ -73,8 +71,9 @@ axios.get('https://xoaurahiru.com/api/movies')
                 <div class="tab-content">
                     <div class="tab-pane fade show active" id="tab-1" role="tabpanel" aria-labelledby="1-tab" tabindex="0">
                         <div class="row">
+                            <Loading v-if="isLoading"/>
                             <!-- item -->
-                            <HomeContentItemOne v-for="(movie, index) in NewMovies" :key="index" :movie="movie" />
+                            <HomeContentItemOne v-if="NewMovies" v-for="(movie, index) in NewMovies" :key="index" :movie="movie" />
                             <!-- end item -->
                         </div>
                     </div>
@@ -82,7 +81,7 @@ axios.get('https://xoaurahiru.com/api/movies')
                     <div class="tab-pane fade" id="tab-2" role="tabpanel" aria-labelledby="2-tab" tabindex="0">
                         <div class="row">
                             <!-- item -->
-                            <HomeContentItemTwo v-for="(movie, index) in AllMovies" :key="index" :movie="movie" />
+                            <HomeContentItemTwo v-if="AllMovies" v-for="(movie, index) in AllMovies" :key="index" :movie="movie" />
                             <!-- end item -->
                         </div>
                     </div>
