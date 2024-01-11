@@ -1,3 +1,19 @@
+<script setup>
+onMounted(()=>{
+    if (document.querySelector('.header')) {
+		const headerBtn = document.querySelector('.header__btn');
+		const headerNav = document.querySelector('.menu');
+
+		function toggleHeaderMenu() {
+			headerBtn.classList.toggle('header__btn--active');
+			headerNav.classList.toggle('menu--active');
+		}
+
+		headerBtn.addEventListener('click', toggleHeaderMenu);
+	}
+})
+</script>
+
 <template>
     <div>
         <!-- header -->
@@ -250,20 +266,20 @@
                         </svg>
                     </a>
 
-                <ul class="dropdown-menu menu__dropdown-menu">
-                    <li><a href="signin.html">Sign In</a></li>
-                    <li><a href="signup.html">Sign Up</a></li>
-                    <li><a href="forgot.html">Forgot password</a></li>
-                    <li><a href="404.html">404 Page</a></li>
-                </ul>
-            </li>
-            <!-- end dropdown -->
-        </ul>
-        <!-- end menu nav -->
+                    <ul class="dropdown-menu menu__dropdown-menu">
+                        <li><a href="signin.html">Sign In</a></li>
+                        <li><a href="signup.html">Sign Up</a></li>
+                        <li><a href="forgot.html">Forgot password</a></li>
+                        <li><a href="404.html">404 Page</a></li>
+                    </ul>
+                </li>
+                <!-- end dropdown -->
+            </ul>
+            <!-- end menu nav -->
+        </div>
+        <!-- end mobile menu -->
     </div>
-    <!-- end mobile menu -->
-</div></template>
+</template>
 
-<script setup></script>
 
 <style lang="scss" scoped></style>
