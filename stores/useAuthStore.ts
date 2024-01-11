@@ -19,6 +19,10 @@ type RegistrationInfo = {
   password_confirmation: string;
 }
 
+type ForgotPassword = {
+    email: string;
+}
+
 export const useAuthStore = defineStore('auth', () => {
   const user = ref<User | null>(null)
   const isLoggedIn = computed(() => !!user.value)
@@ -60,5 +64,16 @@ export const useAuthStore = defineStore('auth', () => {
     return register;
   }
 
-  return {user, login, isLoggedIn, fetchUser, logout, register}
+  async function forgotPassword(info: ForgotPassword) {
+    await useApiFetch("/sanctum/csrf-cookie");
+
+    const forgotPassword = await useApiFetch("/forgot-password", {
+      method: "POST",
+      body: info,
+    });
+
+    return forgotPassword;
+  }
+
+  return {user, login, isLoggedIn, fetchUser, logout, register, forgotPassword}
 })
