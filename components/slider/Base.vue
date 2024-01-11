@@ -36,8 +36,8 @@ axios.get('https://xoaurahiru.com/api/movies/new')
                     <Splide class="hero splide splide--hero" :options="{
                         type: 'loop',
                         perPage: 1,
-                        drag: true,
                         pagination: true,
+                        autoplay: true,
                         speed: 1200,
                         gap: 24,
                         arrows: false,
@@ -69,7 +69,7 @@ axios.get('https://xoaurahiru.com/api/movies/new')
 
                         <SplideSlide v-for="movie in latestMovies">
 
-                            <div class="hero__slide" :data-bg="'https://xoaurahiru.com/' + movie.banner_img">
+                            <div class="hero__slide" :style="{ backgroundImage: 'url(https://xoaurahiru.com/' + movie.banner_img + ')' }">
                                 <div class="hero__content">
                                     <h2 class="hero__title">{{ movie.name }} <sub>{{ movie.rating }}</sub></h2>
                                     <p class="hero__text">{{ movie.description }}</p>
@@ -97,6 +97,12 @@ axios.get('https://xoaurahiru.com/api/movies/new')
 </template>
 
 <style>
+.hero__slide {
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
 .splide--hero .splide__arrows {
     display: none;
 }
