@@ -18,7 +18,7 @@ const options = ref({
 
 let latestMovies = ref([])
 
-axios.get('https://xoaurahiru.com/api/movies/new')
+await axios.get('https://xoaurahiru.com/api/movies/new')
     .then(response => {
         latestMovies.value = response.data.data
     })

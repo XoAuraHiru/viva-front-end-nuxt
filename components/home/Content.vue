@@ -5,7 +5,7 @@ let NewMovies = ref([]);
 let AllMovies = ref([]);
 let isLoading = ref(true)
 
-axios.get('https://xoaurahiru.com/api/movies/new')
+await axios.get('https://xoaurahiru.com/api/movies/new')
     .then(response => {
         NewMovies.value = response.data.data
         isLoading.value = false
@@ -14,7 +14,7 @@ axios.get('https://xoaurahiru.com/api/movies/new')
         console.log(error);
     });
 
-axios.get('https://xoaurahiru.com/api/movies')
+await axios.get('https://xoaurahiru.com/api/movies')
     .then(response => {
         AllMovies.value = response.data.data
     })
@@ -71,9 +71,10 @@ axios.get('https://xoaurahiru.com/api/movies')
                 <div class="tab-content">
                     <div class="tab-pane fade show active" id="tab-1" role="tabpanel" aria-labelledby="1-tab" tabindex="0">
                         <div class="row">
-                            <Loading v-if="isLoading"/>
+                            <Loading v-if="isLoading" />
                             <!-- item -->
-                            <HomeContentItemOne v-if="NewMovies" v-for="(movie, index) in NewMovies" :key="index" :movie="movie" />
+                            <HomeContentItemOne v-if="NewMovies" v-for="(movie, index) in NewMovies" :key="index"
+                                :movie="movie" />
                             <!-- end item -->
                         </div>
                     </div>
@@ -81,20 +82,23 @@ axios.get('https://xoaurahiru.com/api/movies')
                     <div class="tab-pane fade" id="tab-2" role="tabpanel" aria-labelledby="2-tab" tabindex="0">
                         <div class="row">
                             <!-- item -->
-                            <HomeContentItemTwo v-if="AllMovies" v-for="(movie, index) in AllMovies" :key="index" :movie="movie" />
+                            <HomeContentItemTwo v-if="AllMovies" v-for="(movie, index) in AllMovies" :key="index"
+                                :movie="movie" />
                             <!-- end item -->
                         </div>
                     </div>
 
                     <div class="tab-pane fade" id="tab-3" role="tabpanel" aria-labelledby="3-tab" tabindex="0">
                         <div class="row">
-                            <HomeContentItemTwo v-if="AllMovies" v-for="(movie, index) in AllMovies" :key="index" :movie="movie" />
+                            <HomeContentItemTwo v-if="AllMovies" v-for="(movie, index) in AllMovies" :key="index"
+                                :movie="movie" />
                         </div>
                     </div>
 
                     <div class="tab-pane fade" id="tab-4" role="tabpanel" aria-labelledby="4-tab" tabindex="0">
                         <div class="row">
-                            <HomeContentItemTwo v-if="AllMovies" v-for="(movie, index) in AllMovies" :key="index" :movie="movie" />    
+                            <HomeContentItemTwo v-if="AllMovies" v-for="(movie, index) in AllMovies" :key="index"
+                                :movie="movie" />
                         </div>
                     </div>
                 </div>
