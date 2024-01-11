@@ -70,10 +70,7 @@ async function handleLogin() {
                         <!-- end authorization form -->
 
                         <div v-if="isSigning" class="sign__form">
-                            <div class="sign__group">
-                                <iframe
-                                    src="https://lottie.host/embed/2059ec4f-4342-4c34-a1a2-619c786233dc/BEv8Dzl3PI.json"></iframe>
-                            </div>
+                            <LottieLoading/>
                             <button class="sign__btn" type="submit" disabled><span>Signing In. Please Wait</span></button>
                         </div>
                     </div>
