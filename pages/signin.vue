@@ -1,4 +1,24 @@
 <script setup>
+import {useAuthStore} from "~/stores/useAuthStore";
+
+const form = ref({
+    email: "hirun@gmail.com",
+    password: "123456789"
+});
+
+const auth = useAuthStore();
+ 
+async function handleLogin() {
+  if (auth.isLoggedIn) {
+    return navigateTo("/");
+  }
+ 
+  const { error } = await auth.login(form.value);
+ 
+  if (!error.value) {
+    return navigateTo("/");
+  }
+}
 
 </script>
 
@@ -9,17 +29,17 @@
                 <div class="col-12">
                     <div class="sign__content">
                         <!-- authorization form -->
-                        <form action="#" class="sign__form">
+                        <form @submit.prevent="handleLogin" class="sign__form">
                             <a href="index.html" class="sign__logo">
                                 <img src="/img/logo.svg" alt="">
                             </a>
 
                             <div class="sign__group">
-                                <input type="text" class="sign__input" placeholder="Email">
+                                <input type="email" v-model="form.email" class="sign__input" placeholder="Email">
                             </div>
 
                             <div class="sign__group">
-                                <input type="password" class="sign__input" placeholder="Password">
+                                <input type="password" v-model="form.password" class="sign__input" placeholder="Password">
                             </div>
 
                             <div class="sign__group sign__group--checkbox">
@@ -27,7 +47,7 @@
                                 <label for="remember">Remember me</label>
                             </div>
 
-                            <button class="sign__btn" type="button"><span>Sign in</span></button>
+                            <button class="sign__btn" type="submit"><span>Sign in</span></button>
 
                             <span class="sign__text">Don't have an account? <a href="signup.html">Sign up!</a></span>
 

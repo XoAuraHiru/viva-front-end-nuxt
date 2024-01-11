@@ -1,16 +1,19 @@
 <script setup>
-onMounted(()=>{
+import { useAuthStore } from "~/stores/useAuthStore";
+const auth = useAuthStore();
+
+onMounted(() => {
     if (document.querySelector('.header')) {
-		const headerBtn = document.querySelector('.header__btn');
-		const headerNav = document.querySelector('.menu');
+        const headerBtn = document.querySelector('.header__btn');
+        const headerNav = document.querySelector('.menu');
 
-		function toggleHeaderMenu() {
-			headerBtn.classList.toggle('header__btn--active');
-			headerNav.classList.toggle('menu--active');
-		}
+        function toggleHeaderMenu() {
+            headerBtn.classList.toggle('header__btn--active');
+            headerNav.classList.toggle('menu--active');
+        }
 
-		headerBtn.addEventListener('click', toggleHeaderMenu);
-	}
+        headerBtn.addEventListener('click', toggleHeaderMenu);
+    }
 })
 </script>
 
@@ -23,9 +26,9 @@ onMounted(()=>{
                     <div class="col-12">
                         <div class="header__content">
                             <!-- header logo -->
-                            <a href="index.html" class="header__logo">
+                            <nuxt-link href="/" class="header__logo">
                                 <img src="/images/logo.svg" alt="" />
-                            </a>
+                            </nuxt-link>
                             <!-- end header logo -->
 
                             <!-- header categories -->
@@ -162,13 +165,26 @@ onMounted(()=>{
                                     </ul>
                                 </div>
 
-                                <a href="signin" class="header__sign-in">
+                                <a v-if="!auth.isLoggedIn" href="signin" class="header__sign-in">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                                         <path
                                             d="M20,12a1,1,0,0,0-1-1H11.41l2.3-2.29a1,1,0,1,0-1.42-1.42l-4,4a1,1,0,0,0-.21.33,1,1,0,0,0,0,.76,1,1,0,0,0,.21.33l4,4a1,1,0,0,0,1.42,0,1,1,0,0,0,0-1.42L11.41,13H19A1,1,0,0,0,20,12ZM17,2H7A3,3,0,0,0,4,5V19a3,3,0,0,0,3,3H17a3,3,0,0,0,3-3V16a1,1,0,0,0-2,0v3a1,1,0,0,1-1,1H7a1,1,0,0,1-1-1V5A1,1,0,0,1,7,4H17a1,1,0,0,1,1,1V8a1,1,0,0,0,2,0V5A3,3,0,0,0,17,2Z" />
                                     </svg>
                                     <span>sign in</span>
                                 </a>
+
+                                <div v-if="auth.isLoggedIn" class="profile__user">
+                                    <div class="profile__avatar">
+                                        <nuxt-link to="/profile">
+                                            <img src="/img/user.svg" alt="">
+                                        </nuxt-link>
+                                    </div>
+                                    <div class="profile__meta">
+                                            <h3>{{ auth.user.first_name }} {{ auth.user.last_name }}</h3>
+                                            <span>FlixGo ID: 23562</span>
+                                    </div>
+
+                                </div>
                             </div>
                             <!-- end header actions -->
 
