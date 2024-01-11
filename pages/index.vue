@@ -6,6 +6,7 @@
   <div>
     <SliderBase/>
     <HomeContent/>
+    <HomeNowShowing/>
   </div>
 </template>
 
