@@ -2,8 +2,8 @@
 import {useAuthStore} from "~/stores/useAuthStore";
 
 const form = ref({
-    email: "hirun@gmail.com",
-    password: "123456789"
+    email: "",
+    password: ""
 });
 
 const auth = useAuthStore();
@@ -49,7 +49,7 @@ async function handleLogin() {
 
                             <button class="sign__btn" type="submit"><span>Sign in</span></button>
 
-                            <span class="sign__text">Don't have an account? <a href="signup.html">Sign up!</a></span>
+                            <span class="sign__text">Don't have an account? <nuxt-link to="/signup"><a>Sign up!</a></nuxt-link></span>
 
                             <span class="sign__text"><a href="forgot.html">Forgot password?</a></span>
                         </form>
