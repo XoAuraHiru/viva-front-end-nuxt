@@ -1,4 +1,31 @@
-<script setup></script>
+<script setup>
+import '@splidejs/splide/dist/css/splide.min.css';
+import { defineComponent } from 'vue';
+import { Splide, SplideSlide } from '@splidejs/vue-splide';
+import axios from 'axios';
+
+defineComponent({
+    components: {
+        Splide,
+        SplideSlide,
+    },
+});
+
+const options = ref({
+    rewind: true,
+    arrows: 'slider'
+});
+
+let latestMovies = ref([])
+
+axios.get('https://xoaurahiru.com/api/movies/new')
+    .then(response => {
+        latestMovies.value = response.data.data
+    })
+    .catch(error => {
+        console.log(error);
+    });
+</script>
 
 <template>
     <!-- home -->
@@ -6,7 +33,13 @@
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <div class="hero splide splide--hero">
+                    <Splide class="hero splide splide--hero" 
+                        :options="{ 
+                            arrows: true,
+                            hasSliderWrapper: true,
+                            autoplay: true
+                        }">
+
                         <div class="splide__arrows">
                             <button class="splide__arrow splide__arrow--prev" type="button">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -22,86 +55,27 @@
                             </button>
                         </div>
 
-                        <div class="splide__track">
-                            <ul class="splide__list">
-                                <li class="splide__slide">
-                                    <div class="hero__slide" data-bg="/images/bg/slide__bg-1.jpg">
-                                        <div class="hero__content">
-                                            <h2 class="hero__title">
-                                                Savage Beauty <sub>9.8</sub>
-                                            </h2>
-                                            <p class="hero__text">
-                                                A brilliant scientist discovers a way to harness the
-                                                power of the ocean's currents to create a new,
-                                                renewable energy source. But when her groundbreaking
-                                                technology falls into the wrong hands, she must race
-                                                against time to stop it from being used for evil.
-                                            </p>
-                                            <p class="hero__category">
-                                                <a href="#">Action</a>
-                                                <a href="#">Drama</a>
-                                                <a href="#">Comedy</a>
-                                            </p>
-                                            <div class="hero__actions">
-                                                <a href="details.html" class="hero__btn">
-                                                    <span>Watch now</span>
-                                                </a>
-                                            </div>
-                                        </div>
+                        <SplideSlide v-for="movie in latestMovies">
+
+                            <div class="hero__slide" :data-bg="'https://xoaurahiru.com/' + movie.banner_img">
+                                <div class="hero__content">
+                                    <h2 class="hero__title">{{movie.name}} <sub>{{movie.rating}}</sub></h2>
+                                    <p class="hero__text">{{ movie.description }}</p>
+                                    <p class="hero__category">
+                                        <a href="#">{{ (movie.genre.genre).charAt(0).toUpperCase() + (movie.genre.genre).slice(1) }}</a>
+                                        <a href="#">Drama</a>
+                                        <a href="#">Comedy</a>
+                                    </p>
+                                    <div class="hero__actions">
+                                        <a href="details.html" class="hero__btn">
+                                            <span>Book now</span>
+                                        </a>
                                     </div>
-                                </li>
-                                <li class="splide__slide">
-                                    <div class="hero__slide" data-bg="/images/bg/slide__bg-2.jpg">
-                                        <div class="hero__content">
-                                            <h2 class="hero__title">
-                                                Voices from the Other Side <sub>7.1</sub>
-                                            </h2>
-                                            <p class="hero__text">
-                                                In a world where magic is outlawed and hunted, a young
-                                                witch must use her powers to fight back against the
-                                                corrupt authorities who seek to destroy her kind.
-                                            </p>
-                                            <p class="hero__category">
-                                                <a href="#">Adventure</a>
-                                                <a href="#">Triler</a>
-                                            </p>
-                                            <div class="hero__actions">
-                                                <a href="details.html" class="hero__btn">
-                                                    <span>Watch now</span>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="splide__slide">
-                                    <div class="hero__slide" data-bg="/images/bg/slide__bg-3.jpg">
-                                        <div class="hero__content">
-                                            <h2 class="hero__title">
-                                                Endless Horizon <sub>8.6</sub>
-                                            </h2>
-                                            <p class="hero__text">
-                                                When a renowned archaeologist goes missing, his
-                                                daughter sets out on a perilous journey to the heart
-                                                of the Amazon rainforest to find him. Along the way,
-                                                she discovers a hidden city and a dangerous conspiracy
-                                                that threatens the very balance of power in the world.
-                                            </p>
-                                            <p class="hero__category">
-                                                <a href="#">Action</a>
-                                                <a href="#">Drama</a>
-                                                <a href="#">Triler</a>
-                                            </p>
-                                            <div class="hero__actions">
-                                                <a href="details.html" class="hero__btn">
-                                                    <span>Watch now</span>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
+                                </div>
+                            </div>
+
+                        </SplideSlide>
+                    </Splide>
                 </div>
             </div>
         </div>

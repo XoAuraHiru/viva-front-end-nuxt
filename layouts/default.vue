@@ -3,10 +3,6 @@ useHead({
     link: [
         {
             rel: "stylesheet",
-            href: "/css/main.css",
-        },
-        {
-            rel: "stylesheet",
             href: "/css/splide.min.css",
         },
         {
