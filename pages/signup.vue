@@ -1,6 +1,6 @@
 <script setup>
 import { useAuthStore } from "~/stores/useAuthStore";
-
+const auth = useAuthStore();
 const form = ref({
     first_name: "",
     last_name: "",
@@ -10,14 +10,20 @@ const form = ref({
 });
 
 const isSigning = ref(false)
-
-const auth = useAuthStore();
+const errors = ref()
 
 async function handleRegister() {
     const isSigning = ref(true)
     const { error } = await auth.register(form.value);
     if (!error.value) {
         return navigateTo("/");
+    }
+
+    if (!error.value) {
+        return navigateTo("/");
+    } else {
+        errors.value = error.value
+        isSigning.value = false
     }
 }
 </script>
@@ -29,10 +35,14 @@ async function handleRegister() {
                 <div class="col-12">
                     <div class="sign__content">
                         <!-- registration form -->
-                        <form @submit.prevent="handleRegister" action="#" class="sign__form">
+                        <form v-if="!isSigning" @submit.prevent="handleRegister" action="#" class="sign__form">
                             <a href="index.html" class="sign__logo">
                                 <img src="/img/logo.svg" alt="">
                             </a>
+
+                            <div v-if="errors" class="sign__group">
+                                <span class="sign__text">{{ errors.data.message }}</span>
+                            </div>
 
                             <div class="sign__group">
                                 <input v-model="form.first_name" type="text" class="sign__input" placeholder="First Name">
