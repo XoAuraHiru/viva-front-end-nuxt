@@ -20,7 +20,7 @@ export function useApiFetch<T>(path: string, options: UseFetchOptions<T> = {}) {
     }
   }
 
-  return useFetch("http://vivaapi.xoaurahiru.com/" + path, {
+  return useFetch("https://vivaapi.xoaurahiru.com/" + path, {
     credentials: "include",
     watch: false,
     ...options,
