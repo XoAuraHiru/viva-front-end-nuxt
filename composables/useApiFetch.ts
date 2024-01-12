@@ -4,7 +4,7 @@ import {useRequestHeaders} from "nuxt/app";
 export function useApiFetch<T>(path: string, options: UseFetchOptions<T> = {}) {
   let headers: any = {
     accept: "application/json",
-    referer: "http://vivafront.xoaurahiru.com/"
+    referer: "http://vivafront.xoaurahiru.com"
   }
 
   const token = useCookie('XSRF-TOKEN');
@@ -20,7 +20,7 @@ export function useApiFetch<T>(path: string, options: UseFetchOptions<T> = {}) {
     }
   }
 
-  return useFetch("https://vivaapi.xoaurahiru.com/" + path, {
+  return useFetch("https://vivaapi.xoaurahiru.com" + path, {
     credentials: "include",
     watch: false,
     ...options,
