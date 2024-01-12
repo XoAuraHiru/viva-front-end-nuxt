@@ -28,6 +28,7 @@ export function useApiFetch<T>(path: string, options: UseFetchOptions<T> = {}) {
 
   return useFetch("https://vivaapi.xoaurahiru.com" + path, {
     credentials: "include",
+    mode: "no-cors", // Set the mode to "no-cors"
     watch: false,
     ...options,
     headers: {
