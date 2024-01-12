@@ -20,7 +20,7 @@ async function handleLogin() {
 
     const { error, response } = await auth.login(form.value);
 
-    if (response && response.status === 200) {
+    if (response && response.status === 204) {
         return navigateTo("/");
     } else {
         errors.value = error.value
