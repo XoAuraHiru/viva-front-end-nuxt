@@ -1,5 +1,5 @@
 <script setup>
-import {useAuthStore} from "~/stores/useAuthStore";
+import { useAuthStore } from "~/stores/useAuthStore";
 
 const form = ref({
     first_name: "",
@@ -9,13 +9,16 @@ const form = ref({
     password_confirmation: ""
 });
 
+const isSigning = ref(false)
+
 const auth = useAuthStore();
 
 async function handleRegister() {
-  const {error} = await auth.register(form.value);
-  if (!error.value) {
-    return navigateTo("/");
-  }
+    const isSigning = ref(true)
+    const { error } = await auth.register(form.value);
+    if (!error.value) {
+        return navigateTo("/");
+    }
 }
 </script>
 
@@ -48,7 +51,8 @@ async function handleRegister() {
                             </div>
 
                             <div class="sign__group">
-                                <input v-model="form.password_confirmation" type="password" class="sign__input" placeholder="Confirm Password">
+                                <input v-model="form.password_confirmation" type="password" class="sign__input"
+                                    placeholder="Confirm Password">
                             </div>
 
                             <div class="sign__group sign__group--checkbox">
@@ -56,12 +60,17 @@ async function handleRegister() {
                                 <label for="remember">I agree to the <a href="privacy.html">Privacy policy</a></label>
                             </div>
 
-                            <button class="sign__btn" type="submit"><span>Sign up</span></button>
+                            <AuthSignBtn>Sign Up</AuthSignBtn>
 
                             <span class="sign__text">Already have an account? <nuxt-link to="/signin"><a>Sign
                                         in!</a></nuxt-link></span>
                         </form>
                         <!-- registration form -->
+
+                        <div v-if="isSigning" class="sign__form">
+                            <LottieLoading />
+                            <AuthSignBtn :isDisabled="true">Signing In. Please Wait</AuthSignBtn>
+                        </div>
                     </div>
                 </div>
             </div>
