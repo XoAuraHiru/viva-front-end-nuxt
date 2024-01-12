@@ -18,9 +18,9 @@ async function handleLogin() {
         return navigateTo("/");
     }
 
-    const { error } = await auth.login(form.value);
+    const { error, response } = await auth.login(form.value);
 
-    if (!error.value) {
+    if (response && response.status === 200) {
         return navigateTo("/");
     } else {
         errors.value = error.value
