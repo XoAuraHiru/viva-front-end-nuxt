@@ -27,7 +27,7 @@ export default defineNuxtConfig({
         },
         {
           rel: "stylesheet",
-          href: "css/bootstrap.min.css",
+          href: "/css/bootstrap.min.css",
         },
       ]
     }
