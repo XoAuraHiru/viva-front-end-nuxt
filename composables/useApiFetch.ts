@@ -5,6 +5,8 @@ export function useApiFetch<T>(path: string, options: UseFetchOptions<T> = {}) {
   let headers: any = {
     accept: "application/json",
     referer: "http://vivafront.xoaurahiru.com",
+    "Access-Control-Allow-Origin":
+      "http://vivafront.xoaurahiru.com",
   }
 
   const token = useCookie('XSRF-TOKEN');
@@ -22,7 +24,7 @@ export function useApiFetch<T>(path: string, options: UseFetchOptions<T> = {}) {
 
   return useFetch("https://vivaapi.xoaurahiru.com" + path, {
     credentials: "include",
-    mode: "no-cors",
+    mode: "cors",
     watch: false,
     ...options,
     headers: {
