@@ -12,22 +12,22 @@ const errors = ref()
 
 const auth = useAuthStore();
 
-async function handleLogin() {
-    isSigning.value = true
-    if (auth.isLoggedIn) {
-        isSigning.value = false
-        return navigateTo("/");
-    }
+// async function handleLogin() {
+//     isSigning.value = true
+//     if (auth.isLoggedIn) {
+//         isSigning.value = false
+//         return navigateTo("/");
+//     }
 
-    const { error, response } = await auth.login(form.value);
+//     const { error, response } = await auth.login(form.value);
 
-    if (response && response.status === 204) {
-        return navigateTo("/");
-    } else {
-        errors.value = error.value
-        isSigning.value = false
-    }
-}
+//     if (response && response.status === 204) {
+//         return navigateTo("/");
+//     } else {
+//         errors.value = error.value
+//         isSigning.value = false
+//     }
+// }
 
 // async function handleLogin() {
 //     isSigning.value = true
@@ -49,6 +49,27 @@ async function handleLogin() {
 //     });
 
 // }
+
+async function handleLogin() {
+    await useFetch("https://vivaapi.xoaurahiru.com/sanctum/csrf-cookie", {
+        credentials: "include",
+    });
+
+    const token = useCookie('XSRF-TOKEN');
+
+    await useFetch("https://vivaapi.xoaurahiru.com/login", {
+        credentials: "include",
+        method: "POST",
+        body: {
+            'email': 'email',
+            'password': 'password'
+        },
+        headers: {
+            'X-XSRF-TOKEN': token.value,
+        },
+        watch: false
+    });
+}
 </script>
 
 <template>
