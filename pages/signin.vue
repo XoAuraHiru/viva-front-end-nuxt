@@ -1,4 +1,4 @@
-<script setup>
+<!-- <script setup>
 import { useAuthStore } from "~/stores/useAuthStore";
 import axios from "axios";
 
@@ -50,23 +50,54 @@ const auth = useAuthStore();
 
 // }
 
-async function handleLogin() {
-    await useFetch("https://vivaapi.xoaurahiru.com/sanctum/csrf-cookie", {
-        credentials: "include",
-    });
+// async function handleLogin() {
+//     await useFetch("https://vivaapi.xoaurahiru.com/sanctum/csrf-cookie", {
+//         credentials: "include",
+//     });
 
-    const token = useCookie('XSRF-TOKEN');
+//     const token = useCookie('XSRF-TOKEN');
 
-    await useFetch("https://vivaapi.xoaurahiru.com/login", {
-        credentials: "include",
-        method: "POST",
-        body: form.value,
-        headers: {
-            'X-XSRF-TOKEN': token.value,
-        },
-        watch: false
-    });
-}
+//     await useFetch("https://vivaapi.xoaurahiru.com/login", {
+//         credentials: "include",
+//         method: "POST",
+//         body: form.value,
+//         headers: {
+//             'X-XSRF-TOKEN': token.value,
+//         },
+//         watch: false
+//     });
+// }
+
+
+</script> -->
+<script setup>
+    import axios from 'axios';
+    import { useUserStore } from '~~/stores/user';
+
+    const userStore = useUserStore()
+    const router = useRouter()
+
+    definePageMeta({
+        middleware: 'is-logged-in'
+    })
+
+    let email = ref(null)
+    let password = ref(null)
+    let errors = ref(null)
+
+    const handleLogin = async () => {
+        errors.value = null
+        try {
+            await userStore.login(email.value, password.value);
+            const token = window.localStorage.getItem('token');
+            if (token) {
+                axios.defaults.headers.common['Authorization'] = 'Bearer ' + userStore.api_token;
+            }
+            router.push('/')
+        } catch (error) {
+            errors.value = error.response.data.errors
+        }
+    }
 </script>
 
 <template>
