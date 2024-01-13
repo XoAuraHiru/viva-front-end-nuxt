@@ -1,47 +1,26 @@
 <script setup>
-import axios from 'axios';
+const { $userStore } = useNuxtApp()
 
-const email = ref('');
-const password = ref('');
-const errors = ref(null);
-const isSigning = ref(false)
+let email = ref(null)
+let password = ref(null)
+let errors = ref(null)
 
-axios.defaults.withCredentials = true;
-axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
-axios.defaults.headers.common['Content-Type'] = 'application/json';
-axios.defaults.headers.common['Accept'] = 'application/json';
+const login = async () => {
+    errors.value = null
 
-const handleLogin = async () => {
-    isSigning.value = true
-    axios.get('https://vivaapi.xoaurahiru.com/sanctum/csrf-cookie').then(response => {
-        console.log(response.data);
-    });
-    const csrfToken = useCookie('XSRF-TOKEN')
     try {
-        const response = await axios.post('https://vivaapi.xoaurahiru.com/login', {
-            email,
-            password,
-        }, {
-            headers: {
-                'X-CSRF-TOKEN': csrfToken,
-            },
-        });
-
-        isSigning.value = false
-        console.log(response.data);
+        await $userStore.getTokens()
+        await $userStore.login(email.value, password.value)
     } catch (error) {
-        isSigning.value = false
-        errors.value = error.response.data.message
-        console.error(error);
+        errors.value = error.response.data.errors
     }
-};
 
 </script>
 
 <template>
     <Auth v-auto-animate>
         <!-- authorization form -->
-        <form v-if="!isSigning" @submit.prevent="handleLogin" class="sign__form">
+        <form v-if="!isSigning" @submit.prevent="login" class="sign__form">
             <a href="index.html" class="sign__logo">
                 <img src="/img/logo.svg" alt="">
             </a>
