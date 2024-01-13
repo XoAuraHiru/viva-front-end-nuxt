@@ -1,5 +1,6 @@
 <script setup>
 import { useAuthStore } from "~/stores/useAuthStore";
+import axios from "axios";
 
 const form = ref({
     email: "",
