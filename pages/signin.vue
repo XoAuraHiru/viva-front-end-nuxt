@@ -81,8 +81,8 @@ const auth = useAuthStore();
         middleware: 'is-logged-in'
     })
 
-    let email = ref(null)
-    let password = ref(null)
+    let email = ref("")
+    let password = ref("")
     let errors = ref(null)
 
     const handleLogin = async () => {
@@ -113,11 +113,11 @@ const auth = useAuthStore();
             </div>
 
             <div class="sign__group">
-                <input type="email" v-model="form.email" class="sign__input" placeholder="Email">
+                <input type="email" v-model="email" class="sign__input" placeholder="Email">
             </div>
 
             <div class="sign__group">
-                <input type="password" v-model="form.password" class="sign__input" placeholder="Password">
+                <input type="password" v-model="password" class="sign__input" placeholder="Password">
             </div>
 
 
