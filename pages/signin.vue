@@ -60,10 +60,7 @@ async function handleLogin() {
     await useFetch("https://vivaapi.xoaurahiru.com/login", {
         credentials: "include",
         method: "POST",
-        body: {
-            'email': 'email',
-            'password': 'password'
-        },
+        body: form.value,
         headers: {
             'X-XSRF-TOKEN': token.value,
         },
