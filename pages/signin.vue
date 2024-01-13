@@ -37,8 +37,8 @@ async function handleLogin() {
 
     axios.get('https://vivaapi.xoaurahiru.com/sanctum/csrf-cookie').then(response => {
         axios.post('https://vivaapi.xoaurahiru.com/login', {
-            email: this.form.email,
-            password: this.form.password
+            email: form.email,
+            password: form.password
         }).then(response => {
             isSigning.value = false
             return navigateTo("/");
