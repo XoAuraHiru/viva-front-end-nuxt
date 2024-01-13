@@ -1,7 +1,7 @@
 <script setup>
 import { useAuthStore } from "~/stores/useAuthStore";
 import axios from "axios";
-
+import { vAutoAnimate } from '@formkit/auto-animate'
 const form = ref({
     email: "",
     password: ""
@@ -57,7 +57,7 @@ async function handleLogin() {
 </script>
 
 <template>
-    <Auth>
+    <Auth v-auto-animate>
         <!-- authorization form -->
         <form v-if="!isSigning" @submit.prevent="handleLogin" class="sign__form">
             <a href="index.html" class="sign__logo">
