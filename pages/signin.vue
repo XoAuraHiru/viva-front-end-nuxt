@@ -12,43 +12,43 @@ const errors = ref()
 
 const auth = useAuthStore();
 
-// async function handleLogin() {
-//     isSigning.value = true
-//     if (auth.isLoggedIn) {
-//         isSigning.value = false
-//         return navigateTo("/");
-//     }
-
-//     const { error, response } = await auth.login(form.value);
-
-//     if (response && response.status === 204) {
-//         return navigateTo("/");
-//     } else {
-//         errors.value = error.value
-//         isSigning.value = false
-//     }
-// }
-
 async function handleLogin() {
     isSigning.value = true
+    if (auth.isLoggedIn) {
+        isSigning.value = false
+        return navigateTo("/");
+    }
 
-    axios.defaults.withCredentials = true;
-    axios.defaults.withXSRFToken = true;
+    const { error, response } = await auth.login(form.value);
 
-    axios.get('https://vivaapi.xoaurahiru.com/sanctum/csrf-cookie').then(response => {
-        axios.post('https://vivaapi.xoaurahiru.com/login', {
-            email: form.email,
-            password: form.password
-        }).then(response => {
-            isSigning.value = false
-            return navigateTo("/");
-        }).catch(error => {
-            errors.value = error.value
-            isSigning.value = false
-        });
-    });
-
+    if (response && response.status === 204) {
+        return navigateTo("/");
+    } else {
+        errors.value = error.value
+        isSigning.value = false
+    }
 }
+
+// async function handleLogin() {
+//     isSigning.value = true
+
+//     axios.defaults.withCredentials = true;
+//     axios.defaults.withXSRFToken = true;
+
+//     axios.get('https://vivaapi.xoaurahiru.com/sanctum/csrf-cookie').then(response => {
+//         axios.post('https://vivaapi.xoaurahiru.com/login', {
+//             email: form.email,
+//             password: form.password
+//         }).then(response => {
+//             isSigning.value = false
+//             return navigateTo("/");
+//         }).catch(error => {
+//             errors.value = error.value
+//             isSigning.value = false
+//         });
+//     });
+
+// }
 </script>
 
 <template>
