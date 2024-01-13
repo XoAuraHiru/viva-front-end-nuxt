@@ -14,7 +14,7 @@ const login = async () => {
     } catch (error) {
         errors.value = error.response.data.errors
     }
-
+}
 </script>
 
 <template>
