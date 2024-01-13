@@ -11,21 +11,42 @@ const errors = ref()
 
 const auth = useAuthStore();
 
+// async function handleLogin() {
+//     isSigning.value = true
+//     if (auth.isLoggedIn) {
+//         isSigning.value = false
+//         return navigateTo("/");
+//     }
+
+//     const { error, response } = await auth.login(form.value);
+
+//     if (response && response.status === 204) {
+//         return navigateTo("/");
+//     } else {
+//         errors.value = error.value
+//         isSigning.value = false
+//     }
+// }
+
 async function handleLogin() {
     isSigning.value = true
-    if (auth.isLoggedIn) {
-        isSigning.value = false
-        return navigateTo("/");
-    }
 
-    const { error, response } = await auth.login(form.value);
+    axios.defaults.withCredentials = true;
+    axios.defaults.withXSRFToken = true;
 
-    if (response && response.status === 204) {
-        return navigateTo("/");
-    } else {
-        errors.value = error.value
-        isSigning.value = false
-    }
+    axios.get('https://vivaapi.xoaurahiru.com/sanctum/csrf-cookie').then(response => {
+        axios.post('https://vivaapi.xoaurahiru.com/login', {
+            email: this.form.email,
+            password: this.form.password
+        }).then(response => {
+            isSigning.value = false
+            return navigateTo("/");
+        }).catch(error => {
+            errors.value = error.value
+            isSigning.value = false
+        });
+    });
+
 }
 </script>
 
