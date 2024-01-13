@@ -1,4 +1,4 @@
-<!-- <script setup>
+<script setup>
 import { useAuthStore } from "~/stores/useAuthStore";
 import axios from "axios";
 
@@ -29,75 +29,31 @@ const auth = useAuthStore();
 //     }
 // }
 
-// async function handleLogin() {
-//     isSigning.value = true
+async function handleLogin() {
+    isSigning.value = true
 
-//     axios.defaults.withCredentials = true;
-//     axios.defaults.withXSRFToken = true;
+    axios.defaults.withCredentials = true;
+    axios.defaults.withXSRFToken = true;
 
-//     axios.get('https://vivaapi.xoaurahiru.com/sanctum/csrf-cookie').then(response => {
-//         axios.post('https://vivaapi.xoaurahiru.com/login', {
-//             email: form.email,
-//             password: form.password
-//         }).then(response => {
-//             isSigning.value = false
-//             return navigateTo("/");
-//         }).catch(error => {
-//             errors.value = error.value
-//             isSigning.value = false
-//         });
-//     });
-
-// }
-
-// async function handleLogin() {
-//     await useFetch("https://vivaapi.xoaurahiru.com/sanctum/csrf-cookie", {
-//         credentials: "include",
-//     });
-
-//     const token = useCookie('XSRF-TOKEN');
-
-//     await useFetch("https://vivaapi.xoaurahiru.com/login", {
-//         credentials: "include",
-//         method: "POST",
-//         body: form.value,
-//         headers: {
-//             'X-XSRF-TOKEN': token.value,
-//         },
-//         watch: false
-//     });
-// }
-
-
-</script> -->
-<script setup>
-    import axios from 'axios';
-    import { useUserStore } from '~/stores/user';
-
-    const userStore = useUserStore()
-    const router = useRouter()
-
-    definePageMeta({
-        middleware: 'is-logged-in'
-    })
-
-    let email = ref("")
-    let password = ref("")
-    let errors = ref(null)
-
-    const handleLogin = async () => {
-        errors.value = null
-        try {
-            await userStore.login(email.value, password.value);
-            const token = window.localStorage.getItem('token');
-            if (token) {
-                axios.defaults.headers.common['Authorization'] = 'Bearer ' + userStore.api_token;
+    axios.get('https://vivaapi.xoaurahiru.com/sanctum/csrf-cookie').then(response => {
+        const token = useCookie('XSRF-TOKEN');
+        axios.post('https://vivaapi.xoaurahiru.com/login', {
+            email: form.email,
+            password: form.password,
+            Headers: {
+                'X-XSRF-TOKEN': token
             }
-            router.push('/')
-        } catch (error) {
-            errors.value = error.response.data.errors
-        }
-    }
+        }).then(response => {
+            isSigning.value = false
+            return navigateTo("/");
+        }).catch(error => {
+            errors.value = error.value
+            isSigning.value = false
+        });
+    });
+
+}
+
 </script>
 
 <template>
