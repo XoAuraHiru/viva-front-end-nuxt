@@ -1,58 +1,40 @@
 <script setup>
-import { useAuthStore } from "~/stores/useAuthStore";
-import axios from "axios";
-import { vAutoAnimate } from '@formkit/auto-animate'
-const form = ref({
-    email: "",
-    password: ""
-});
+import axios from 'axios';
 
+const email = ref('');
+const password = ref('');
+const errors = ref(null);
 const isSigning = ref(false)
-const errors = ref()
 
-const auth = useAuthStore();
+axios.defaults.withCredentials = true;
+axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+axios.defaults.headers.common['Content-Type'] = 'application/json';
+axios.defaults.headers.common['Accept'] = 'application/json';
 
-// async function handleLogin() {
-//     isSigning.value = true
-//     if (auth.isLoggedIn) {
-//         isSigning.value = false
-//         return navigateTo("/");
-//     }
-
-//     const { error, response } = await auth.login(form.value);
-
-//     if (response && response.status === 204) {
-//         return navigateTo("/");
-//     } else {
-//         errors.value = error.value
-//         isSigning.value = false
-//     }
-// }
-
-async function handleLogin() {
+const handleLogin = async () => {
     isSigning.value = true
-
-    axios.defaults.withCredentials = true;
-    axios.defaults.withXSRFToken = true;
-
     axios.get('https://vivaapi.xoaurahiru.com/sanctum/csrf-cookie').then(response => {
-        const token = useCookie('XSRF-TOKEN');
-        axios.post('https://vivaapi.xoaurahiru.com/login', {
-            email: form.email,
-            password: form.password,
-            Headers: {
-                'X-XSRF-TOKEN': token
-            }
-        }).then(response => {
-            isSigning.value = false
-            return navigateTo("/");
-        }).catch(error => {
-            errors.value = error.value
-            isSigning.value = false
-        });
+        console.log(response.data);
     });
+    const csrfToken = useCookie('XSRF-TOKEN')
+    try {
+        const response = await axios.post('https://vivaapi.xoaurahiru.com/login', {
+            email,
+            password,
+        }, {
+            headers: {
+                'X-CSRF-TOKEN': csrfToken,
+            },
+        });
 
-}
+        isSigning.value = false
+        console.log(response.data);
+    } catch (error) {
+        isSigning.value = false
+        errors.value = error.response.data.message
+        console.error(error);
+    }
+};
 
 </script>
 
@@ -82,7 +64,9 @@ async function handleLogin() {
                 <label for="remember">Remember me</label>
             </div>
 
-            <AuthSignBtn>Sign In</AuthSignBtn>
+            <AuthSignBtn :isDisabled="true" v-if="!email | !password">Sign In</AuthSignBtn>
+
+            <AuthSignBtn v-if="email && password">Sign In</AuthSignBtn>
 
             <span class="sign__text">Don't have an account? <nuxt-link to="/signup"><a>Sign
                         up!</a></nuxt-link></span>
