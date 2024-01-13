@@ -1,4 +1,5 @@
 import {useApiFetch} from "~/composables/useApiFetch";
+import {defineStore} from "pinia";
 
 type User = {
   id: number;
