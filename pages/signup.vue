@@ -1,5 +1,55 @@
 <script setup>
 
+import axios from 'axios'
+
+const errors = ref()
+const isSigning = ref(false)
+const form = reactive({
+    first_name: '',
+    last_name: '',
+    email: '',
+    password: '',
+    password_confirmation: ''
+})
+
+axios.defaults.withCredentials = true
+axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'
+axios.defaults.headers.common['Content-Type'] = 'application/json'
+axios.defaults.headers.common['Accept'] = 'application/json'
+axios.defaults.baseURL = 'http://localhost:8000'
+
+async function handleRegister() {
+    isSigning.value = true
+    await useFetch('https://vivaapi.xoaurahiru.com/sanctum/csrf-cookie', {
+        method: 'GET',
+        credentials: 'include',
+        watch: false,
+    })
+    const token = useCookie('XSRF-TOKEN');
+    try {
+        await useFetch('https://vivaapi.xoaurahiru.com/register', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                referer: "https://vivafront.xoaurahiru.com",
+                'X-XSRF-TOKEN': token,
+            },
+            body: form,
+            credentials: 'include',
+            watch: false,
+            mode: 'cors',
+        })
+
+        isSigning.value = false
+        router.push('/')
+    } catch (error) {
+        isSigning.value = false
+        errors.value = error.response
+    }
+    
+}
+
 </script>
 
 <template>

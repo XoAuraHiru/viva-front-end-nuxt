@@ -1,5 +1,6 @@
 <script setup>
 const { isAuthenticated } = useSanctumAuth();
+const user = useSanctumUser();
 
 onMounted(() => {
     if (document.querySelector('.header')) {
@@ -179,8 +180,8 @@ onMounted(() => {
                                         </nuxt-link>
                                     </div>
                                     <div class="profile__meta">
-                                            <h3>Hirun Chamara</h3>
-                                            <span>FlixGo ID: 23562</span>
+                                            <h3>{{user.first_name}} {{user.last_name}}</h3>
+                                            <span>FlixGo ID: {{user.id}}</span>
                                     </div>
 
                                 </div>

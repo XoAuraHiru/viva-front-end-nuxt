@@ -3,8 +3,8 @@ const { login } = useSanctumAuth();
 
 const isSigning = ref(false)
 const errors = ref()
-const email = ref('')
-const password = ref('')
+const email = ref('hirun@gmail.com')
+const password = ref('123456789')
 
 const userCredentials = {
     email: email.value,

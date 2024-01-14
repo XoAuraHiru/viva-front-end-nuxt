@@ -1,4 +1,13 @@
 <script setup>
+const { logout } = useSanctumAuth();
+const user = useSanctumUser();
+
+async function handleLogout() {
+    await logout();
+    router.push('/signin')
+}
+
+console.log(user)
 
 </script>
 
@@ -16,8 +25,8 @@
                                     <img src="/img/user.svg" alt="">
                                 </div>
                                 <div class="profile__meta">
-                                    <h3>Hirun Chamara</h3>
-                                    <span>FlixGo ID: 23562</span>
+                                    <h3>{{user.first_name}} {{user.last_name}}</h3>
+                                    <span>FlixGo ID: {{user.id}}</span>
                                 </div>
                             </div>
 
