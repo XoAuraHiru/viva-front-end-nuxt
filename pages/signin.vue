@@ -11,43 +11,10 @@ const userCredentials = {
     password: password.value,
 };
 
-async function handleLogin2() {
+async function handleLogin() {
     isSigning.value = true
     try {
         await login(userCredentials);
-        isSigning.value = false
-        router.push('/')
-    } catch (error) {
-        isSigning.value = false
-        errors.value = error.response
-    }
-}
-
-async function handleLogin() {
-    isSigning.value = true
-    await useFetch('https://vivaapi.xoaurahiru.com/sanctum/csrf-cookie', {
-            method: 'GET',
-            credentials: 'include',
-            watch: false,
-        })
-        const token = useCookie('XSRF-TOKEN');
-    try {
-        await useFetch('https://vivaapi.xoaurahiru.com/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-                referer: "https://vivafront.xoaurahiru.com",
-                'X-XSRF-TOKEN': token,
-            },
-            body: {
-                email: email.value,
-                password: password.value,
-            },
-            credentials: 'include',
-            watch: false,
-            mode: 'cors',
-        })
         isSigning.value = false
         router.push('/')
     } catch (error) {
