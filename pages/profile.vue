@@ -1,6 +1,9 @@
 <script setup>
 const { logout } = useSanctumAuth();
+const { capitalize } = useCapitalized();
 const user = useSanctumUser();
+const first_name = capitalize(user.first_name)
+const last_name = capitalize(user.last_name)
 
 async function handleLogout() {
     await logout();
@@ -25,7 +28,7 @@ console.log(user)
                                     <img src="/img/user.svg" alt="">
                                 </div>
                                 <div class="profile__meta">
-                                    <h3>{{user.first_name}} {{user.last_name}}</h3>
+                                    <h3>{{first_name}} {{last_name}}</h3>
                                     <span>FlixGo ID: {{user.id}}</span>
                                 </div>
                             </div>
