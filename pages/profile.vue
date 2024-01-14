@@ -1,10 +1,5 @@
 <script setup>
-import {useAuthStore} from "~/stores/useAuthStore";
-const auth = useAuthStore();
 
-async function handleLogout() {
-  await auth.logout();
-}
 </script>
 
 <template>
@@ -21,7 +16,7 @@ async function handleLogout() {
                                     <img src="/img/user.svg" alt="">
                                 </div>
                                 <div class="profile__meta">
-                                    <h3>{{auth.user.first_name}} {{auth.user.last_name}}</h3>
+                                    <h3>Hirun Chamara</h3>
                                     <span>FlixGo ID: 23562</span>
                                 </div>
                             </div>
