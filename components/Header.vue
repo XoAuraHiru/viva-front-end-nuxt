@@ -1,7 +1,4 @@
 <script setup>
-import { useAuthStore } from "~/stores/useAuthStore";
-const auth = useAuthStore();
-
 onMounted(() => {
     if (document.querySelector('.header')) {
         const headerBtn = document.querySelector('.header__btn');

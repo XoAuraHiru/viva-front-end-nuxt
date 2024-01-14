@@ -1,11 +1,34 @@
 <script setup>
+const { login } = useSanctumAuth();
+
+const isSigning = ref(false)
+const errors = ref()
+const email = ref('')
+const password = ref('')
+
+const userCredentials = {
+    email: email.value,
+    password: password.value,
+};
+
+async function handleLogin() {
+    isSigning.value = true
+    try {
+        await login(userCredentials);
+        isSigning.value = false
+        router.push('/')
+    } catch (error) {
+        isSigning.value = false
+        errors.value = error.response
+    }
+}
 
 </script>
 
 <template>
     <Auth v-auto-animate>
         <!-- authorization form -->
-        <form v-if="!isSigning" @submit.prevent="login" class="sign__form">
+        <form v-if="!isSigning" @submit.prevent="handleLogin" class="sign__form">
             <a href="index.html" class="sign__logo">
                 <img src="/img/logo.svg" alt="">
             </a>

@@ -34,5 +34,9 @@ export default defineNuxtConfig({
 
   },
 
-  modules: ["@pinia/nuxt", "@formkit/auto-animate/nuxt"],
+  modules: ["@pinia/nuxt", "@formkit/auto-animate/nuxt","nuxt-auth-sanctum"],
+  sanctum: {
+    baseUrl: 'https://vivaapi.xoaurahiru.com', // Laravel API
+    origin: 'https://vivafront.xoaurahiru.com', // Nuxt app
+  },
 })
