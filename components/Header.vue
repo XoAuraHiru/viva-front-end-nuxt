@@ -3,8 +3,8 @@ const { isAuthenticated } = useSanctumAuth();
 const user = useSanctumUser();
 const { capitalize } = useCapitalized();
 
-const firstName = capitalize(user.first_name)
-const lastName = capitalize(user.last_name)
+const firstName = capitalize(String(user.first_name));
+const lastName = capitalize(String(user.last_name))
 
 onMounted(() => {
     if (document.querySelector('.header')) {
@@ -65,7 +65,7 @@ onMounted(() => {
                                 <!-- dropdown -->
                                 <li class="header__nav-item">
                                     <a class="header__nav-link" href="#" role="button" data-bs-toggle="dropdown"
-                                        aria-expanded="false">Home
+                                        aria-expanded="false">{{firstName}}
                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                                             <path
                                                 d="M17,9.17a1,1,0,0,0-1.41,0L12,12.71,8.46,9.17a1,1,0,0,0-1.41,0,1,1,0,0,0,0,1.42l4.24,4.24a1,1,0,0,0,1.42,0L17,10.59A1,1,0,0,0,17,9.17Z" />
