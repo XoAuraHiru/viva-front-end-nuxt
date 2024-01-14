@@ -1,6 +1,10 @@
 <script setup>
 const { isAuthenticated } = useSanctumAuth();
 const user = useSanctumUser();
+const { capitalize } = useCapitalized();
+
+const firstName = capitalize(user.first_name)
+const lastName = capitalize(user.last_name)
 
 onMounted(() => {
     if (document.querySelector('.header')) {
@@ -180,7 +184,7 @@ onMounted(() => {
                                         </nuxt-link>
                                     </div>
                                     <div class="profile__meta">
-                                            <h3>{{user.first_name}} {{user.last_name}}</h3>
+                                            <h3>{{firstName}} {{lastName}}</h3>
                                             <span>FlixGo ID: {{user.id}}</span>
                                     </div>
 
