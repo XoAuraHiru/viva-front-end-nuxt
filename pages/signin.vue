@@ -1,20 +1,5 @@
 <script setup>
-const { $userStore } = useNuxtApp()
 
-let email = ref(null)
-let password = ref(null)
-let errors = ref(null)
-
-const login = async () => {
-    errors.value = null
-
-    try {
-        await $userStore.getTokens()
-        await $userStore.login(email.value, password.value)
-    } catch (error) {
-        errors.value = error.response.data.errors
-    }
-}
 </script>
 
 <template>

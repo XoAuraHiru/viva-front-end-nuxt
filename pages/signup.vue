@@ -12,20 +12,7 @@ const form = ref({
 const isSigning = ref(false)
 const errors = ref()
 
-async function handleRegister() {
-    const isSigning = ref(true)
-    const { error } = await auth.register(form.value);
-    if (!error.value) {
-        return navigateTo("/");
-    }
 
-    if (!error.value) {
-        return navigateTo("/");
-    } else {
-        errors.value = error.value
-        isSigning.value = false
-    }
-}
 </script>
 
 <template>

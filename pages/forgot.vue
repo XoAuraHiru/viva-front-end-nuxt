@@ -1,34 +1,5 @@
 <script setup>
-import { useAuthStore } from "~/stores/useAuthStore";
 
-const form = ref({
-    email: "",
-});
-
-const errors = ref()
-
-const auth = useAuthStore();
-const isLoading = ref(false)
-const emailSent = ref(false)
-
-async function handleReset() {
-    isLoading.value = true
-    if (auth.isLoggedIn) {
-
-        isLoading.value = false
-        return navigateTo("/");
-    }
-
-    const { data, error } = await auth.forgotPassword(form.value);
-
-    if (!error.value) {
-        isLoading.value = false;
-        emailSent.value = true;
-        console.log(data)
-    } else {
-        errors.value = error.value
-    }
-}
 </script>
 
 <template>
