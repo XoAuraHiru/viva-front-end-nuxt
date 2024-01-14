@@ -1,17 +1,4 @@
 <script setup>
-import { useAuthStore } from "~/stores/useAuthStore";
-const auth = useAuthStore();
-const form = ref({
-    first_name: "",
-    last_name: "",
-    email: "",
-    password: "",
-    password_confirmation: ""
-});
-
-const isSigning = ref(false)
-const errors = ref()
-
 
 </script>
 
