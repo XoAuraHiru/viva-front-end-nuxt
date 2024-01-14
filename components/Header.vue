@@ -184,7 +184,7 @@ onMounted(() => {
                                         </nuxt-link>
                                     </div>
                                     <div class="profile__meta">
-                                            <h3>{{firstName}} {{lastName}}</h3>
+                                            <h3>Hi {{capitalize(user.first_name)}}!</h3>
                                             <span>FlixGo ID: {{user.id}}</span>
                                     </div>
 
