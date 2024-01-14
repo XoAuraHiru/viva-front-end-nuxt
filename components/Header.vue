@@ -3,8 +3,8 @@ const { isAuthenticated } = useSanctumAuth();
 const user = useSanctumUser();
 const { capitalize } = useCapitalized();
 
-const firstName = capitalize(String(user.first_name));
-const lastName = capitalize(String(user.last_name))
+const firstName = capitalize(user.first_name.toString());
+const lastName = capitalize(user.last_name.toString())
 
 onMounted(() => {
     if (document.querySelector('.header')) {

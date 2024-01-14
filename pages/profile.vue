@@ -3,8 +3,8 @@ const { logout } = useSanctumAuth();
 const { capitalize } = useCapitalized();
 const user = useSanctumUser();
 
-const firstName = capitalize(String(user.first_name));
-const lastName = capitalize(String(user.last_name))
+const firstName = capitalize(user.first_name.toString());
+const lastName = capitalize(user.last_name.toString())
 
 async function handleLogout() {
     await logout();
