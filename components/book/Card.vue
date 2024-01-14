@@ -37,18 +37,18 @@ const confirmSeats = () => {
             <span class="movie__date card__top">12th February 2024</span>
             <span class="movie__time card__top mt-3">08:00 AM</span>
 
-            <div v-if="!seatSelected" v-auto-animate class="row justify-content-center card__top mt-5">
+            <div v-if="!seatSelected" v-auto-animate class="row justify-content-center card__top mt-5 px-3">
+                <div class="col gap-1 d-flex justify-content-center">
+                    <BookSeat @SeatChecked="handleSeatChecked" @SeatUnchecked="handleSeatUnchecked" v-for="i in 8" :id="i" />
+                </div>
                 <div class="col gap-1 d-flex justify-content-center">
                     <BookSeat @SeatChecked="handleSeatChecked" @SeatUnchecked="handleSeatUnchecked" v-for="i in 10" :id="i" />
                 </div>
                 <div class="col gap-1 d-flex justify-content-center">
-                    <BookSeat @SeatChecked="handleSeatChecked" @SeatUnchecked="handleSeatUnchecked" v-for="i in 13" :id="i" />
+                    <BookSeat @SeatChecked="handleSeatChecked" @SeatUnchecked="handleSeatUnchecked" v-for="i in 12" :id="i" />
                 </div>
                 <div class="col gap-1 d-flex justify-content-center">
-                    <BookSeat @SeatChecked="handleSeatChecked" @SeatUnchecked="handleSeatUnchecked" v-for="i in 15" :id="i" />
-                </div>
-                <div class="col gap-1 d-flex justify-content-center">
-                    <BookSeat @SeatChecked="handleSeatChecked" @SeatUnchecked="handleSeatUnchecked" v-for="i in 15" :id="i" />
+                    <BookSeat @SeatChecked="handleSeatChecked" @SeatUnchecked="handleSeatUnchecked" v-for="i in 12" :id="i" />
                 </div>
                 <!-- stats -->
                 <div class="row">
