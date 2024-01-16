@@ -27,12 +27,7 @@ await axios.get(`https://vivaapi.xoaurahiru.com/api/seats`)
         console.log(error);
     });
 
-const totalPrice = computed(() => {
-    return selectedSeats.value.reduce((total, seatId) => {
-        const seat = seats.value.find(seat => seat.id === seatId);
-        return total + parseFloat(seat.type.price);
-    }, 0);
-});
+const totalPrice = ref(0)
 
 const uniqueLetters = computed(() => {
     const seatLetters = seats.value.map(seat => seat.seat_no.charAt(0));
@@ -46,17 +41,19 @@ const seatsByLetter = computed(() => {
     }, {});
 });
 
-const handleSeatChecked = (id) => {
+const handleSeatChecked = (id, price) => {
     if (!selectedSeats.value.includes(id)) {
         selectedSeats.value.push(id);
+        totalPrice.value += parseFloat(price);
     }
     console.log(selectedSeats.value);
 };
 
-const handleSeatUnchecked = (id) => {
+const handleSeatUnchecked = (id, price) => {
     const index = selectedSeats.value.indexOf(id);
     if (index !== -1) {
         selectedSeats.value.splice(index, 1);
+        totalPrice.value -= parseFloat(price);
     }
     console.log(selectedSeats.value);
 };
@@ -83,7 +80,7 @@ const confirmSeats = () => {
             <div v-if="!seatSelected" v-auto-animate class="row justify-content-center card__top mt-5 px-3">
                 <div v-for="letter in uniqueLetters" :key="letter" class="col gap-1 d-flex justify-content-center">
                     <BookSeat v-for="seat in seatsByLetter[letter]" @SeatChecked="handleSeatChecked"
-                        @SeatUnchecked="handleSeatUnchecked" :id="seat.seat_no" :key="seat.seat_no" />
+                        @SeatUnchecked="handleSeatUnchecked" :id="seat.seat_no" :price="seat.type.price" :key="seat.seat_no" />
                 </div>
                 <!-- stats -->
                 <div class="row">

@@ -7,17 +7,22 @@ const props = defineProps({
     id: {
         type: Number,
         required: true
-    }
+    },
+    price: {
+        type: Number,
+        required: true
+    },
 })
 
 const id = props.id
+const price = props.price
 
 const handleClick = () => {
     isChecked.value = !isChecked.value;
     if (isChecked.value) {
-        emit('seat-checked', id);
+        emit('seat-checked', id, price);
     } else {
-        emit('seat-unchecked', id);
+        emit('seat-unchecked', id, price);
     }
 }
 
