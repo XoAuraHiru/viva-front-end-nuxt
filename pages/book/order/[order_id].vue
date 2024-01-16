@@ -1,4 +1,5 @@
 <script setup>
+import axios from 'axios';
 
 useHead({
     script: [
