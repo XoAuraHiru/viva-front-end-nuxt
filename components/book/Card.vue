@@ -7,8 +7,6 @@ const selectedSeats = ref([]);
 const seatSelected = ref(false);
 const orderCreated = ref(false);
 const router = useRouter()
-
-
 const show = ref([]);
 const seats = ref([]);
 
@@ -84,7 +82,7 @@ async function confirmSeats() {
             console.log(response);
             seatSelected.value = false;
             orderCreated.value = true;
-            const order_id = response.order_id
+            const order_id = response.data.data.order_id
             setTimeout(() => {
                 router.push('/book/order/' + order_id)
             }, 5000);
