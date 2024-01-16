@@ -59,7 +59,7 @@ const handleSeatUnchecked = (id, price) => {
 
 async function confirmSeats() {
     seatSelected.value = true;
-    const order_id = ref([]);
+    const order_id = ref();
     try {
 
         const token = useCookie('XSRF-TOKEN');
