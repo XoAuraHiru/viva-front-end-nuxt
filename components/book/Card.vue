@@ -59,6 +59,7 @@ const handleSeatUnchecked = (id, price) => {
 
 async function confirmSeats() {
     seatSelected.value = true;
+    const order_id = ref([]);
     try {
 
         const token = useCookie('XSRF-TOKEN');
@@ -82,17 +83,14 @@ async function confirmSeats() {
             console.log(response);
             seatSelected.value = false;
             orderCreated.value = true;
-            let order_id = response.data
-            console.log(response.data.data);
-            console.log(response.data.data.data);
-            console.log(response.data);
-            console.log(order_id);
-            setTimeout(() => {
-                router.push('/book/order/' + order_id)
-            }, 5000);
+            order_id = response.data.data
         }).catch(error => {
             console.log(error);
         });
+        console.log(order_id);
+        setTimeout(() => {
+            router.push('/book/order/' + order_id)
+        }, 5000);
 
     } catch (error) {
 
@@ -116,7 +114,8 @@ async function confirmSeats() {
             <!-- <span class="movie__date card__top">{{ show[0].shedule_date }}</span>
             <span class="movie__time card__top mt-3">{{ show[0].time.time }}</span> -->
 
-            <div v-if="!seatSelected && !orderCreated" v-auto-animate class="row justify-content-center card__top mt-5 px-3">
+            <div v-if="!seatSelected && !orderCreated" v-auto-animate
+                class="row justify-content-center card__top mt-5 px-3">
                 <div v-for="letter in uniqueLetters" :key="letter" class="col gap-1 d-flex justify-content-center">
                     <BookSeat v-for="seat in seatsByLetter[letter]" @SeatChecked="handleSeatChecked"
                         @SeatUnchecked="handleSeatUnchecked" :id="seat.seat_no" :price="seat.type.price"
@@ -147,8 +146,8 @@ async function confirmSeats() {
             <!-- end seats -->
 
             <LottieLoading class="card__top" v-if="seatSelected" />
-            <div class="card__top row d-flex justify-content-center" v-if="orderCreated" >
-                <LottieDone class=""/>
+            <div class="card__top row d-flex justify-content-center" v-if="orderCreated">
+                <LottieDone class="" />
                 <h3 class="total__title" v-if="orderCreated">Order Created</h3>
                 <GeneralButtonFill class="mt-5">Redirecting to payment</GeneralButtonFill>
             </div>
