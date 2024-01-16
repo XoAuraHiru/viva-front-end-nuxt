@@ -1,6 +1,11 @@
 <script setup>
 const user = useSanctumUser();
-order = defineProps(['order']);
+order = defineProps({
+    order: {
+        type: Object,
+        required: true
+    },
+});
 onMounted(()=> {
     document.getElementById('payhere-payment').onclick = function (e) {
         payhere.startPayment(payment);
