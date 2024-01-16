@@ -28,7 +28,7 @@ await axios.get(`https://vivaapi.xoaurahiru.com/api/order/` + order_id)
 
 <template>
     <div>
-        <BookOrder :order="order"/>
+        <BookOrder :orderInfo="order"/>
     </div>
 </template>
 

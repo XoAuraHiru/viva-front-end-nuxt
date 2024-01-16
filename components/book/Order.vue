@@ -1,7 +1,7 @@
 <script setup>
 const user = useSanctumUser();
-defineProps({
-    order: {
+const order = defineProps({
+    orderInfo: {
         type: Object,
         required: true
     }
