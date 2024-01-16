@@ -62,18 +62,28 @@ async function confirmSeats() {
     seatSelected.value = true;
     try {
 
-        await axios({
-            method: 'post',
-            url: 'https://vivaapi.xoaurahiru.com/api/order/create',
-            data: {
-                seats: selectedSeats.value,
-                shedule_id: id
-            }
-        }).then(function(response) {
-            console.log(response);
-        }).catch(function(error) {
-            console.log(error);
-        });
+        await useFetch('https://vivaapi.xoaurahiru.com/sanctum/csrf-cookie', {
+            method: 'GET',
+            credentials: 'include',
+            watch: false,
+        })
+
+        await useFetch('https://vivaapi.xoaurahiru.com/api/order/create', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                referer: "https://vivafront.xoaurahiru.com",
+                'X-XSRF-TOKEN': token,
+            },
+            body: {
+                show_id: id,
+                seats: selectedSeats.value
+            },
+            credentials: 'include',
+            watch: false,
+            mode: 'cors',
+        })
 
     } catch (error) {
 
