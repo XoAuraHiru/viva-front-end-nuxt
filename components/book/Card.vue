@@ -58,8 +58,28 @@ const handleSeatUnchecked = (id, price) => {
     console.log(selectedSeats.value);
 };
 
-const confirmSeats = () => {
+async function confirmSeats() {
     seatSelected.value = true;
+    try {
+
+        await axios({
+            method: 'post',
+            url: 'https://vivaapi.xoaurahiru.com/api/order/create',
+            data: {
+                seats: selectedSeats.value,
+                shedule_id: id
+            }
+        }).then(function(response) {
+            console.log(response);
+        }).catch(function(error) {
+            console.log(error);
+        });
+
+    } catch (error) {
+
+        console.log(error);
+
+    }
 };
 
 
@@ -80,7 +100,8 @@ const confirmSeats = () => {
             <div v-if="!seatSelected" v-auto-animate class="row justify-content-center card__top mt-5 px-3">
                 <div v-for="letter in uniqueLetters" :key="letter" class="col gap-1 d-flex justify-content-center">
                     <BookSeat v-for="seat in seatsByLetter[letter]" @SeatChecked="handleSeatChecked"
-                        @SeatUnchecked="handleSeatUnchecked" :id="seat.seat_no" :price="seat.type.price" :key="seat.seat_no" />
+                        @SeatUnchecked="handleSeatUnchecked" :id="seat.seat_no" :price="seat.type.price"
+                        :key="seat.seat_no" />
                 </div>
                 <!-- stats -->
                 <div class="row">
@@ -92,7 +113,7 @@ const confirmSeats = () => {
 
                         <div class="row mt-5">
                             <h3 class="total__title col-6">Total</h3>
-                            <span class="total__price col-6">Rs {{totalPrice}}</span>
+                            <span class="total__price col-6">Rs {{ totalPrice }}</span>
                         </div>
                     </div>
                 </div>
