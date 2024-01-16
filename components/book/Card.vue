@@ -8,6 +8,8 @@ const { id } = useRoute().params;
 const selectedSeats = ref([]);
 const seatSelected = ref(false);
 const orderCreated = ref(false);
+const router = useRouter()
+
 
 const show = ref([]);
 const seats = ref([]);
@@ -85,7 +87,7 @@ async function confirmSeats() {
             seatSelected.value = false;
             orderCreated.value = true;
             setTimeout(() => {
-                this.$router.push('/book/order/' + response.data.data.order_id)
+                router.push('/book/order/' + response.data.data.order_id)
             }, 2000);
         }).catch(error => {
             console.log(error);
