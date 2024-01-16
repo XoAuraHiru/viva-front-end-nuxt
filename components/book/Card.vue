@@ -1,9 +1,43 @@
 
 import type { LottieLoading } from '#build/components';
 <script setup>
+import axios from 'axios';
+
+const { id } = useRoute().params;
 
 const selectedSeats = ref([]);
 const seatSelected = ref(false);
+
+const show = ref([]);
+const seats = ref([]);
+
+await axios.get(`https://vivaapi.xoaurahiru.com/api/shows/movie/${id}`)
+    .then(response => {
+        show.value = response.data.data
+    })
+    .catch(error => {
+        console.log(error);
+    });
+
+await axios.get(`https://vivaapi.xoaurahiru.com/api/seats`)
+    .then(response => {
+        seats.value = response.data.data
+    })
+    .catch(error => {
+        console.log(error);
+    });
+
+const uniqueLetters = computed(() => {
+    const seatLetters = seats.value.map(seat => seat.seat_no.charAt(0));
+    return [...new Set(seatLetters)];
+});
+
+const seatsByLetter = computed(() => {
+    return uniqueLetters.value.reduce((acc, letter) => {
+        acc[letter] = seats.value.filter(seat => seat.seat_no.startsWith(letter));
+        return acc;
+    }, {});
+});
 
 const handleSeatChecked = (id) => {
     if (!selectedSeats.value.includes(id)) {
@@ -24,6 +58,8 @@ const confirmSeats = () => {
     seatSelected.value = true;
 };
 
+
+
 </script>
 
 <template>
@@ -33,22 +69,14 @@ const confirmSeats = () => {
                 <img src="/img/logo.svg" alt="">
             </a>
 
-            <h3 class="movie__title card__top">Fast 9</h3>
-            <span class="movie__date card__top">12th February 2024</span>
-            <span class="movie__time card__top mt-3">08:00 AM</span>
+            <h3 class="movie__title card__top">{{ show.data[0].movie.name }}</h3>
+            <span class="movie__date card__top">{{ show.data[0].shedule_date }}</span>
+            <span class="movie__time card__top mt-3">{{ show.data[0].time.time }}</span>
 
             <div v-if="!seatSelected" v-auto-animate class="row justify-content-center card__top mt-5 px-3">
-                <div class="col gap-1 d-flex justify-content-center">
-                    <BookSeat @SeatChecked="handleSeatChecked" @SeatUnchecked="handleSeatUnchecked" v-for="i in 8" :id="i" />
-                </div>
-                <div class="col gap-1 d-flex justify-content-center">
-                    <BookSeat @SeatChecked="handleSeatChecked" @SeatUnchecked="handleSeatUnchecked" v-for="i in 10" :id="i" />
-                </div>
-                <div class="col gap-1 d-flex justify-content-center">
-                    <BookSeat @SeatChecked="handleSeatChecked" @SeatUnchecked="handleSeatUnchecked" v-for="i in 12" :id="i" />
-                </div>
-                <div class="col gap-1 d-flex justify-content-center">
-                    <BookSeat @SeatChecked="handleSeatChecked" @SeatUnchecked="handleSeatUnchecked" v-for="i in 12" :id="i" />
+                <div v-for="letter in uniqueLetters" :key="letter" class="col gap-1 d-flex justify-content-center">
+                    <BookSeat v-for="seat in seatsByLetter[letter]" @SeatChecked="handleSeatChecked"
+                        @SeatUnchecked="handleSeatUnchecked" :id="seat.seat_no" :key="seat.seat_no" />
                 </div>
                 <!-- stats -->
                 <div class="row">
@@ -69,12 +97,12 @@ const confirmSeats = () => {
                 <div class="row px-5">
                     <GeneralButtonFill class="mt-5" @click="confirmSeats()">Continue</GeneralButtonFill>
                     <GeneralButtonOutline class="mt-2">Cancel</GeneralButtonOutline>
-                </div> 
+                </div>
             </div>
 
             <!-- end seats -->
 
-            <LottieLoading class="card__top" v-if="seatSelected"/>
+            <LottieLoading class="card__top" v-if="seatSelected" />
 
 
         </div>
@@ -122,26 +150,27 @@ const confirmSeats = () => {
 
 .card__body:before,
 .card__body:after {
-  content: '';
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  position: absolute;
-  -webkit-transform: translateZ(0);
-  -webkit-backface-visibility: hidden;
+    content: '';
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    position: absolute;
+    -webkit-transform: translateZ(0);
+    -webkit-backface-visibility: hidden;
 }
 
 .card__body:before {
-  background-color: rgba(0,0,0,0.7);
-  z-index: 1;
-}
-.card__body:after {
-  background: linear-gradient(270deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.6) 100%);
-  z-index: 2;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 1;
 }
 
-.card__top{
+.card__body:after {
+    background: linear-gradient(270deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.6) 100%);
+    z-index: 2;
+}
+
+.card__top {
     z-index: 3;
 }
 
