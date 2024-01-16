@@ -11,7 +11,7 @@ const seatSelected = ref(false);
 const show = ref([]);
 const seats = ref([]);
 
-await axios.get(`https://vivaapi.xoaurahiru.com/api/shows/movie/${id}`)
+await axios.get(`https://vivaapi.xoaurahiru.com/api/shows/show/${id}`)
     .then(response => {
         show.value = response.data.data
     })
@@ -69,9 +69,9 @@ const confirmSeats = () => {
                 <img src="/img/logo.svg" alt="">
             </a>
 
-            <h3 class="movie__title card__top">{{ show.data[0].movie.name }}</h3>
-            <span class="movie__date card__top">{{ show.data[0].shedule_date }}</span>
-            <span class="movie__time card__top mt-3">{{ show.data[0].time.time }}</span>
+            <h3 class="movie__title card__top">{{ show.movie.name }}</h3>
+            <span class="movie__date card__top">{{ show.shedule_date }}</span>
+            <span class="movie__time card__top mt-3">{{ show.time.time }}</span>
 
             <div v-if="!seatSelected" v-auto-animate class="row justify-content-center card__top mt-5 px-3">
                 <div v-for="letter in uniqueLetters" :key="letter" class="col gap-1 d-flex justify-content-center">
