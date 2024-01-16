@@ -11,7 +11,7 @@ const seatSelected = ref(false);
 const show = ref([]);
 const seats = ref([]);
 
-await axios.get(`https://vivaapi.xoaurahiru.com/api/shows/show/${id}`)
+await axios.get(`https://vivaapi.xoaurahiru.com/api/shows/show/` + id)
     .then(response => {
         show.value = response.data.data
     })
