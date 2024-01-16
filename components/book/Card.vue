@@ -7,6 +7,7 @@ const { id } = useRoute().params;
 
 const selectedSeats = ref([]);
 const seatSelected = ref(false);
+const orderCreated = ref(false);
 
 const show = ref([]);
 const seats = ref([]);
@@ -63,7 +64,7 @@ async function confirmSeats() {
     try {
 
         const token = useCookie('XSRF-TOKEN');
-        
+
         await useFetch('https://vivaapi.xoaurahiru.com/api/order/create', {
             method: 'POST',
             headers: {
@@ -79,7 +80,16 @@ async function confirmSeats() {
             credentials: 'include',
             watch: false,
             mode: 'cors',
-        })
+        }).then(response => {
+            console.log(response);
+            seatSelected.value = false;
+            orderCreated.value = true;
+            setTimeout(() => {
+                router.push('/book/order/' + response.data.data.order_id)
+            }, 2000);
+        }).catch(error => {
+            console.log(error);
+        });
 
     } catch (error) {
 
@@ -103,7 +113,7 @@ async function confirmSeats() {
             <!-- <span class="movie__date card__top">{{ show[0].shedule_date }}</span>
             <span class="movie__time card__top mt-3">{{ show[0].time.time }}</span> -->
 
-            <div v-if="!seatSelected" v-auto-animate class="row justify-content-center card__top mt-5 px-3">
+            <div v-if="!seatSelected && !orderCreated" v-auto-animate class="row justify-content-center card__top mt-5 px-3">
                 <div v-for="letter in uniqueLetters" :key="letter" class="col gap-1 d-flex justify-content-center">
                     <BookSeat v-for="seat in seatsByLetter[letter]" @SeatChecked="handleSeatChecked"
                         @SeatUnchecked="handleSeatUnchecked" :id="seat.seat_no" :price="seat.type.price"
@@ -134,6 +144,11 @@ async function confirmSeats() {
             <!-- end seats -->
 
             <LottieLoading class="card__top" v-if="seatSelected" />
+            <div v-if="orderCreated" >
+                <LottieSuccess class="card__top"/>
+                <h3 class="card__top" v-if="orderCreated">Order Created</h3>
+                <GeneralButtonFill class="mt-5">Redirecting to payment</GeneralButtonFill>
+            </div>
 
 
         </div>
