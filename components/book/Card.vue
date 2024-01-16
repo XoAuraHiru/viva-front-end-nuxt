@@ -82,7 +82,9 @@ async function confirmSeats() {
             console.log(response);
             seatSelected.value = false;
             orderCreated.value = true;
-            let order_id = response.data.data.data.order_id
+            let order_id = response.data
+            console.log(response.data.data);
+            console.log(response.data.data.data);
             console.log(response.data);
             console.log(order_id);
             setTimeout(() => {
