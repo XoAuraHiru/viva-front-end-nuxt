@@ -18,7 +18,7 @@ const options = ref({
 
 let latestMovies = ref([])
 
-await axios.get('https://xoaurahiru.com/api/movies/new')
+await axios.get('https://xoaurahiru.com/api/movies/latest')
     .then(response => {
         latestMovies.value = response.data.data
     })
@@ -69,18 +69,18 @@ await axios.get('https://xoaurahiru.com/api/movies/new')
 
                         <SplideSlide v-for="movie in latestMovies">
 
-                            <div class="hero__slide" :style="{ backgroundImage: 'url(https://xoaurahiru.com/' + movie.banner_img + ')' }">
+                            <div class="hero__slide" :style="{ backgroundImage: 'url(https://xoaurahiru.com/' + movie.movie.banner_img + ')' }">
                                 <div class="hero__content">
-                                    <h2 class="hero__title">{{ movie.name }} <sub>{{ movie.rating }}</sub></h2>
-                                    <p class="hero__text">{{ movie.description }}</p>
+                                    <h2 class="hero__title">{{ movie.movie.name }} <sub>{{ movie.movie.rating }}</sub></h2>
+                                    <p class="hero__text">{{ movie.movie.description }}</p>
                                     <p class="hero__category">
-                                        <a href="#">{{ (movie.genre.genre).charAt(0).toUpperCase() +
-                                            (movie.genre.genre).slice(1) }}</a>
+                                        <!-- <a href="#">{{ (movie.movie.genre.genre).charAt(0).toUpperCase() +
+                                            (movie.genre.genre).slice(1) }}</a> -->
                                         <a href="#">Drama</a>
                                         <a href="#">Comedy</a>
                                     </p>
                                     <div class="hero__actions">
-                                        <a href="details.html" class="hero__btn">
+                                        <a :href="'/book/show-['+movie.shedule_id+']'" class="hero__btn">
                                             <span>Book now</span>
                                         </a>
                                     </div>
