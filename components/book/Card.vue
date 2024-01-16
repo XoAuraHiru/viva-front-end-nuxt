@@ -27,6 +27,13 @@ await axios.get(`https://vivaapi.xoaurahiru.com/api/seats`)
         console.log(error);
     });
 
+const totalPrice = computed(() => {
+    return selectedSeats.value.reduce((total, seatId) => {
+        const seat = seats.value.find(seat => seat.id === seatId);
+        return total + parseFloat(seat.type.price);
+    }, 0);
+});
+
 const uniqueLetters = computed(() => {
     const seatLetters = seats.value.map(seat => seat.seat_no.charAt(0));
     return [...new Set(seatLetters)];
@@ -88,7 +95,7 @@ const confirmSeats = () => {
 
                         <div class="row mt-5">
                             <h3 class="total__title col-6">Total</h3>
-                            <span class="total__price col-6">$39.99</span>
+                            <span class="total__price col-6">${{totalPrice}}</span>
                         </div>
                     </div>
                 </div>
@@ -303,4 +310,5 @@ const confirmSeats = () => {
 
 .plan__btn:hover:before {
     opacity: 0;
-}</style>
+}
+</style>
