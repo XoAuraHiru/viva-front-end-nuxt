@@ -92,7 +92,7 @@ const confirmSeats = () => {
 
                         <div class="row mt-5">
                             <h3 class="total__title col-6">Total</h3>
-                            <span class="total__price col-6">${{totalPrice}}</span>
+                            <span class="total__price col-6">Rs {{totalPrice}}</span>
                         </div>
                     </div>
                 </div>
