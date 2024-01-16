@@ -1,5 +1,3 @@
-
-import type { LottieLoading } from '#build/components';
 <script setup>
 import axios from 'axios';
 
@@ -86,9 +84,9 @@ async function confirmSeats() {
             console.log(response);
             seatSelected.value = false;
             orderCreated.value = true;
-            const order_id = response.data
+            const order_id = response.order_id
             setTimeout(() => {
-                router.push('/book/order/' + order_id.order_id)
+                router.push('/book/order/' + order_id)
             }, 5000);
         }).catch(error => {
             console.log(error);
