@@ -62,12 +62,8 @@ async function confirmSeats() {
     seatSelected.value = true;
     try {
 
-        await useFetch('https://vivaapi.xoaurahiru.com/sanctum/csrf-cookie', {
-            method: 'GET',
-            credentials: 'include',
-            watch: false,
-        })
-
+        const token = useCookie('XSRF-TOKEN');
+        
         await useFetch('https://vivaapi.xoaurahiru.com/api/order/create', {
             method: 'POST',
             headers: {
