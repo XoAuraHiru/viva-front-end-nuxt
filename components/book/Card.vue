@@ -84,9 +84,9 @@ async function confirmSeats() {
             orderCreated.value = true;
             let order_id = response.data.data
             console.log(response.data);
-            console.log(order_id);
+            console.log(order_id.value);
             setTimeout(() => {
-                router.push('/book/order/' + order_id)
+                router.push('/book/order/' + order_id.value.order_id)
             }, 5000);
         }).catch(error => {
             console.log(error);
