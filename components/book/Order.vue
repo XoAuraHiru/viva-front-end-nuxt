@@ -49,7 +49,7 @@ const payment = {
 
             <h3 class="movie__title card__top">Order #{{order.order_id}}</h3>
 
-            <span></span>
+            <span>{{ order }}</span>
 
             <GeneralButtonFill class="mt-5 card__top" type="submit" id="payhere-payment">Pay Now</GeneralButtonFill>
             

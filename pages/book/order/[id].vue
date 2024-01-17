@@ -11,13 +11,14 @@ useHead({
 })
 
 const route = useRoute()
-const { order_id } = route.params
+const { id } = route.params
 
 const order = ref([])
 
-await axios.get(`https://vivaapi.xoaurahiru.com/api/order/` + order_id)
+await axios.get(`https://vivaapi.xoaurahiru.com/api/order/` + id)
     .then(response => {
-        order.value = response.data.data
+        order.value = response.data
+        console.log(order.value);
     })
     .catch(error => {
         console.log(error);
