@@ -63,10 +63,10 @@ async function confirmSeats() {
             show_id: showId,
             seats: selectedSeats.value
         })
-        if (response.status === 200) {
+        if (response.status === 'success') {
             seatSelected.value = false;
             orderCreated.value = true;
-            order_id.value = response.data.data
+            order_id.value = response.data.order_id;
 
             setTimeout(() => {
                 router.push({ name: 'payment', params: { id: order_id.value } })
