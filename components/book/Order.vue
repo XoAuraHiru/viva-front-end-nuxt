@@ -6,36 +6,39 @@ const order = defineProps({
         required: true
     }
 });
-onMounted(()=> {
+
+const payment = {
+    "sandbox": true,
+    "merchant_id": "NDA1Mjk5NzQ0MTE2MDM0NjI3OTAyMjUxNzYxMjMwNTI0NTIyNzI=",    // Replace your Merchant ID
+    "return_url": undefined,     // Important
+    "cancel_url": undefined,     // Important
+    "notify_url": "http://sample.com/notify",
+    "order_id": order.order_id,
+    "items": "Movie Tickets",
+    "amount": order.amount,
+    "currency": "LKR",
+    "hash": "45D3CBA93E9F2189BD630ADFE19AA6DC", // *Replace with generated hash retrieved from backend
+    "first_name": user.first_name,
+    "last_name": user.last_name,
+    "email": user.email,
+    "phone": "0771234567",
+    "address": "No.1, Galle Road",
+    "city": "Colombo",
+    "country": "Sri Lanka",
+    "delivery_address": "No. 46, Galle road, Kalutara South",
+    "delivery_city": "Kalutara",
+    "delivery_country": "Sri Lanka",
+    "custom_1": "",
+    "custom_2": ""
+};
+
+onMounted(() => {
     document.getElementById('payhere-payment').onclick = function (e) {
         payhere.startPayment(payment);
     };
 })
 
-const payment = {
-        "sandbox": true,
-        "merchant_id": "NDA1Mjk5NzQ0MTE2MDM0NjI3OTAyMjUxNzYxMjMwNTI0NTIyNzI=",    // Replace your Merchant ID
-        "return_url": undefined,     // Important
-        "cancel_url": undefined,     // Important
-        "notify_url": "http://sample.com/notify",
-        "order_id": order.order_id,
-        "items": "Movie Tickets",
-        "amount": order.amount,
-        "currency": "LKR",
-        "hash": "45D3CBA93E9F2189BD630ADFE19AA6DC", // *Replace with generated hash retrieved from backend
-        "first_name": user.first_name,
-        "last_name": user.last_name,
-        "email": user.email,
-        "phone": "0771234567",
-        "address": "No.1, Galle Road",
-        "city": "Colombo",
-        "country": "Sri Lanka",
-        "delivery_address": "No. 46, Galle road, Kalutara South",
-        "delivery_city": "Kalutara",
-        "delivery_country": "Sri Lanka",
-        "custom_1": "",
-        "custom_2": ""
-    };
+
 
 
 </script>
@@ -47,12 +50,12 @@ const payment = {
                 <img src="/img/logo.svg" alt="">
             </a>
 
-            <h3 class="movie__title card__top">Order #{{order[0].order_id}}</h3>
+            <h3 class="movie__title card__top">Order #{{ order.order_id }}</h3>
 
             <span>{{ order }}</span>
 
             <GeneralButtonFill class="mt-5 card__top" type="submit" id="payhere-payment">Pay Now</GeneralButtonFill>
-            
+
 
         </div>
     </div>
