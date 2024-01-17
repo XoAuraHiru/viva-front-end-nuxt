@@ -1,11 +1,13 @@
 <script setup>
 const user = useSanctumUser();
-const order = defineProps({
+const props = defineProps({
     orderInfo: {
         type: Object,
         required: true
     }
 });
+
+const order = props.orderInfo;
 
 const payment = {
     "sandbox": true,
@@ -32,14 +34,9 @@ const payment = {
     "custom_2": ""
 };
 
-onMounted(() => {
-    document.getElementById('payhere-payment').onclick = function (e) {
-        payhere.startPayment(payment);
-    };
-})
-
-
-
+function paymentHandle() {
+    payhere.startPayment(payment);
+}
 
 </script>
 
@@ -54,7 +51,7 @@ onMounted(() => {
 
             <span>{{ order }}</span>
 
-            <GeneralButtonFill class="mt-5 card__top" type="submit" id="payhere-payment">Pay Now</GeneralButtonFill>
+            <GeneralButtonFill @click="paymentHandle" class="mt-5 card__top" type="submit" id="payhere-payment">Pay Now</GeneralButtonFill>
 
 
         </div>
