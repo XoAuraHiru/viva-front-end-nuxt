@@ -63,8 +63,9 @@ async function confirmSeats() {
             show_id: showId,
             seats: selectedSeats.value
         })
-        console.log(response.data);
-        console.log(response.data.order_id);
+        console.log(response);
+        console.log(response.order_id);
+        console.log(response.value);
     } catch (error) {
 
         console.log(error);
