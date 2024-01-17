@@ -11,6 +11,7 @@
   },
   "devDependencies": {
     "@pinia/nuxt": "^0.5.1",
+    "@unlok-co/nuxt-stripe": "^2.0.0",
     "nuxt": "^3.9.0",
     "nuxt-auth-sanctum": "^0.0.14",
     "vue": "^3.4.6",

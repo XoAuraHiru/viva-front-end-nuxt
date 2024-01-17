@@ -1,4 +1,5 @@
 <script setup>
+const stripe = await useClientStripe()
 const user = useSanctumUser();
 const props = defineProps({
     orderInfo: {
@@ -53,6 +54,8 @@ const makePayment = () => {
             <h3 class="movie__title card__top">Amount {{ order.amount }}</h3>
 
             <span>{{ order }}</span>
+
+            {{ stripe ? stripe : 'Loading...'}}
 
             <GeneralButtonFill @click="makePayment()" class="mt-5 card__top" type="button" id="payhere-payment">Pay Now</GeneralButtonFill>
 

@@ -34,9 +34,29 @@ export default defineNuxtConfig({
 
   },
 
-  modules: ["@pinia/nuxt", "@formkit/auto-animate/nuxt","nuxt-auth-sanctum"],
+  modules: [
+    "@pinia/nuxt", 
+    "@formkit/auto-animate/nuxt",
+    "nuxt-auth-sanctum",
+    '@unlok-co/nuxt-stripe'
+  ],
   sanctum: {
     baseUrl: 'https://vivaapi.xoaurahiru.com', // Laravel API
     origin: 'https://vivafront.xoaurahiru.com', // Nuxt app
   },
+  stripe: {
+    server: {
+      key: 'sk_test_51OZb8EI084Bvf0eZ28BBzRf3dQ1Jr0P12Yw3VlbHqwAaMcERCXUeQdRCbXQmgf1ACmzQCfsBfdbnF9juvcYfJTLF008Xz3S8Ge',
+      options: {
+        apiVersion: '2022-11-15', 
+      }
+    },
+    client: {
+      key: 'pk_test_51OZb8EI084Bvf0eZOOw5VR4REyv9o3MbAVpFJ0SuSzKMj8whjoEpgOxz1dN5quwfutsmQbFZXaUqlztFfPwNpNjF00mzYfVtCG',
+      options: {
+
+      }
+    }
+  }
+  
 })
