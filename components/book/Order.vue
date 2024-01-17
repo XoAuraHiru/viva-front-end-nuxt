@@ -1,5 +1,4 @@
 <script setup>
-const stripe = await useClientStripe()
 const user = useSanctumUser();
 const props = defineProps({
     orderInfo: {
@@ -10,36 +9,36 @@ const props = defineProps({
 
 const order = props.orderInfo[0];
 
-const makePayment = () => {
-    if (window.PayHere) {
-        const payment = {
-            "sandbox": true,
-            "merchant_id": "NDA1Mjk5NzQ0MTE2MDM0NjI3OTAyMjUxNzYxMjMwNTI0NTIyNzI=",    // Replace your Merchant ID
-            "return_url": undefined,     // Important
-            "cancel_url": undefined,     // Important
-            "notify_url": "http://sample.com/notify",
-            "order_id": order.order_id,
-            "items": "Movie Tickets",
-            "amount": order.amount,
-            "currency": "LKR",
-            "hash": "45D3CBA93E9F2189BD630ADFE19AA6DC", // *Replace with generated hash retrieved from backend
-            "first_name": user.first_name,
-            "last_name": user.last_name,
-            "email": user.email,
-            "phone": "0771234567",
-            "address": "No.1, Galle Road",
-            "city": "Colombo",
-            "country": "Sri Lanka",
-            "delivery_address": "No. 46, Galle road, Kalutara South",
-            "delivery_city": "Kalutara",
-            "delivery_country": "Sri Lanka",
-            "custom_1": "",
-            "custom_2": ""
-        };
-
-        window.PayHere.startPayment(payment);
-    }
+const payment = {
+    "sandbox": true,
+    "merchant_id": "NDA1Mjk5NzQ0MTE2MDM0NjI3OTAyMjUxNzYxMjMwNTI0NTIyNzI=",    // Replace your Merchant ID
+    "return_url": undefined,     // Important
+    "cancel_url": undefined,     // Important
+    "notify_url": "http://sample.com/notify",
+    "order_id": order.order_id,
+    "items": "Movie Tickets",
+    "amount": order.amount,
+    "currency": "LKR",
+    "hash": "45D3CBA93E9F2189BD630ADFE19AA6DC", // *Replace with generated hash retrieved from backend
+    "first_name": user.first_name,
+    "last_name": user.last_name,
+    "email": user.email,
+    "phone": "0771234567",
+    "address": "No.1, Galle Road",
+    "city": "Colombo",
+    "country": "Sri Lanka",
+    "delivery_address": "No. 46, Galle road, Kalutara South",
+    "delivery_city": "Kalutara",
+    "delivery_country": "Sri Lanka",
+    "custom_1": "",
+    "custom_2": ""
 };
+
+onMounted(() => {
+    document.getElementById('payhere-payment').onclick = function (e) {
+        payhere.startPayment(payment);
+    };
+})
 
 </script>
 
@@ -55,10 +54,7 @@ const makePayment = () => {
 
             <span>{{ order }}</span>
 
-            {{ stripe ? stripe : 'Loading...'}}
-
-            <GeneralButtonFill @click="makePayment()" class="mt-5 card__top" type="button" id="payhere-payment">Pay Now</GeneralButtonFill>
-
+            <GeneralButtonFill class="mt-5 card__top" type="submit" id="payhere-payment">Pay Now</GeneralButtonFill>
 
         </div>
     </div>
