@@ -83,7 +83,7 @@ async function confirmSeats() {
             console.log(response);
             seatSelected.value = false;
             orderCreated.value = true;
-            order_id = response.data.data
+            this.order_id = response.data
         }).catch(error => {
             console.log(error);
         });
