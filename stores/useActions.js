@@ -9,11 +9,7 @@ export const useActions = defineStore('actions', () => {
       method: "POST",
       body: order,
     });
-    if(error){
-      return error;
-    } else {
-      return data.value;
-    }
+    return data.value;
   }
 
   async function getSeats(){
