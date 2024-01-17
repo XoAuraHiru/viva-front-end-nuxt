@@ -2,35 +2,40 @@ import { useRequestHeaders } from "nuxt/app";
 import dotenv from 'dotenv';
 
 export function useApiFetch(path, options = {}) {
-  let headers = {
-    accept: "application/json",
-    referer: "http://localhost:3000"
-  }
+    const apiUrl = "https://vivaapi.xoaurahiru.com";
 
-  const token = useCookie('XSRF-TOKEN');
-
-  if (token.value) {
-    headers['X-XSRF-TOKEN'] = token.value;
-  }
-
-  if (process.server) {
-    headers = {
-      ...headers,
-      ...useRequestHeaders(["cookie"]),
+    let headers = {
+        accept: "application/json",
+        referer: "https://vivafront.xoaurahiru.com"
     }
-  }
 
-dotenv.config();
+    const token = useCookie('XSRF-TOKEN');
 
-const apiUrl = process.env.API_URL;
-
-return useFetch(apiUrl + path, {
-    credentials: "include",
-    watch: false,
-    ...options,
-    headers: {
-      ...headers,
-      ...(options.headers || {})
+    if (token.value) {
+        headers['X-XSRF-TOKEN'] = token.value;
+    } else {
+        useFetch(apiUrl + "/sanctum/csrf-cookie", {
+            credentials: "include",
+            method: "GET",
+        });
     }
-  });
+
+    if (process.server) {
+        headers = {
+            ...headers,
+            ...useRequestHeaders(["cookie"]),
+        }
+    }
+
+
+
+    return useFetch(apiUrl + path, {
+        credentials: "include",
+        watch: false,
+        ...options,
+        headers: {
+            ...headers,
+            ...(options.headers || {})
+        }
+    });
 }

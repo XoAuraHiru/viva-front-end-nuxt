@@ -1,32 +1,30 @@
 <script setup>
-import axios from 'axios';
-
-const { id } = useRoute().params;
-
+import { useActions } from "~/stores/useActions";
+const props = defineProps({
+    showID: {
+        type: Number,
+        required: true
+    },
+})
+const actions = useActions()
+const showId = props.showID
 const selectedSeats = ref([]);
 const seatSelected = ref(false);
 const orderCreated = ref(false);
 const router = useRouter()
-const show = ref([]);
-const seats = ref([]);
+const seats = ref([])
+const show = await actions.getShow(showId)
 
-await axios.get(`https://vivaapi.xoaurahiru.com/api/shows/show/` + id)
+await actions.getSeats(showId)
     .then(response => {
-        show.value = response.data.data
-    })
-    .catch(error => {
-        console.log(error);
-    });
-
-await axios.get(`https://vivaapi.xoaurahiru.com/api/seats`)
-    .then(response => {
-        seats.value = response.data.data
+        seats.value = response.data
     })
     .catch(error => {
         console.log(error);
     });
 
 const totalPrice = ref(0)
+
 
 const uniqueLetters = computed(() => {
     const seatLetters = seats.value.map(seat => seat.seat_no.charAt(0));
@@ -61,37 +59,21 @@ async function confirmSeats() {
     seatSelected.value = true;
     const order_id = ref();
     try {
-
-        const token = useCookie('XSRF-TOKEN');
-
-        await useFetch('https://vivaapi.xoaurahiru.com/api/order/create', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-                referer: "https://vivafront.xoaurahiru.com",
-                'X-XSRF-TOKEN': token,
-            },
-            body: {
-                show_id: id,
-                seats: selectedSeats.value
-            },
-            credentials: 'include',
-            watch: false,
-            mode: 'cors',
-        }).then(response => {
-            console.log(response);
+        const response = await actions.createOrder({
+            show_id: showId,
+            seats: selectedSeats.value
+        })
+        if (response.status === 200) {
             seatSelected.value = false;
             orderCreated.value = true;
             order_id.value = response.data.data
-        }).catch(error => {
-            console.log(error);
-        });
-        console.log(order_id);
-        setTimeout(() => {
-            router.push('/book/order/' + order_id.order_id)
-        }, 5000);
 
+            setTimeout(() => {
+                router.push({ name: 'payment', params: { id: order_id.value } })
+            }, 3000);
+        } else {
+            console.log(response);
+        }
     } catch (error) {
 
         console.log(error);
@@ -110,9 +92,9 @@ async function confirmSeats() {
                 <img src="/img/logo.svg" alt="">
             </a>
 
-            <h3 class="movie__title card__top">{{ show }}</h3>
-            <!-- <span class="movie__date card__top">{{ show[0].shedule_date }}</span>
-            <span class="movie__time card__top mt-3">{{ show[0].time.time }}</span> -->
+            <h3 class="movie__title card__top">{{ show.data[0].movie.name }}</h3>
+            <span class="movie__date card__top">{{ show.data[0].shedule_date }}</span>
+            <span class="movie__time card__top mt-3">{{ show.data[0].time.time }}</span>
 
             <div v-if="!seatSelected && !orderCreated" v-auto-animate
                 class="row justify-content-center card__top mt-5 px-3">

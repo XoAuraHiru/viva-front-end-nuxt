@@ -4,7 +4,7 @@ import { useApiFetch } from "~/composables/useApiFetch";
 export const useActions = defineStore('actions', () => {
 
   async function createOrder(order){
-    await useApiFetch("/sanctum/csrf-cookie");
+
     const {data, error} = await useApiFetch("/api/order/create", {
       method: "POST",
       body: order,
@@ -12,5 +12,19 @@ export const useActions = defineStore('actions', () => {
     return data.value;
   }
 
-  return { createOrder}
+  async function getSeats(){
+    const {data, error} = await useApiFetch("/api/seats", {
+      method: "GET",
+    });
+    return data.value;
+  }
+
+  async function getShow(showId){
+    const {data, error} = await useApiFetch("/api/shows/show/" + showId, {
+      method: "GET",
+    });
+    return data.value;
+  }
+
+  return { createOrder, getSeats, getShow}
 })

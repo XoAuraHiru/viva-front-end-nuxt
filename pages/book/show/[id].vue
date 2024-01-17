@@ -5,7 +5,7 @@
 
 <template>
     <div>
-        <BookCard/>
+        <BookCard :showID="id"/>
     </div>
 </template>
 
