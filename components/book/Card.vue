@@ -63,18 +63,8 @@ async function confirmSeats() {
             show_id: showId,
             seats: selectedSeats.value
         })
-        if (response.data.status === 200) {
-            seatSelected.value = false;
-            orderCreated.value = true;
-            order_id.value = response.data.order_id;
-
-            setTimeout(() => {
-                router.push({ name: 'payment', params: { id: order_id.value } })
-            }, 3000);
-        } else {
-            console.log(response);
-            order_id.value = response.data.order_id;
-        }
+        console.log(response.data);
+        console.log(response.data.order_id);
     } catch (error) {
 
         console.log(error);
