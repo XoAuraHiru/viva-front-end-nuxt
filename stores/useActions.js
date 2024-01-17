@@ -5,11 +5,15 @@ export const useActions = defineStore('actions', () => {
 
   async function createOrder(order){
 
-    const {data, error, status} = await useApiFetch("/api/order/create", {
+    const {data, error} = await useApiFetch("/api/order/create", {
       method: "POST",
       body: order,
     });
-    return [data.value, status.value, error.value];
+    if(error){
+      return error;
+    } else {
+      return data.value;
+    }
   }
 
   async function getSeats(){

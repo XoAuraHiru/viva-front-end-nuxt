@@ -63,7 +63,7 @@ async function confirmSeats() {
             show_id: showId,
             seats: selectedSeats.value
         })
-        if (response.status === 'success') {
+        if (response.data.status === 200) {
             seatSelected.value = false;
             orderCreated.value = true;
             order_id.value = response.data.order_id;
@@ -73,6 +73,7 @@ async function confirmSeats() {
             }, 3000);
         } else {
             console.log(response);
+            order_id.value = response.data.order_id;
         }
     } catch (error) {
 
