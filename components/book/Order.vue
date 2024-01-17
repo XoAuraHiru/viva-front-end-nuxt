@@ -47,7 +47,7 @@ const payment = {
                 <img src="/img/logo.svg" alt="">
             </a>
 
-            <h3 class="movie__title card__top">Order #{{order.order_id}}</h3>
+            <h3 class="movie__title card__top">Order #{{order[0].order_id}}</h3>
 
             <span>{{ order }}</span>
 
