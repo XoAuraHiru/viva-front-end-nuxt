@@ -17,7 +17,7 @@ const order = ref([])
 
 await axios.get(`https://vivaapi.xoaurahiru.com/api/order/` + id)
     .then(response => {
-        order.value = response.data
+        order.value = response.data.data
         console.log(order.value);
     })
     .catch(error => {
