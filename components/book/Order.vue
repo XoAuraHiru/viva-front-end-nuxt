@@ -7,6 +7,8 @@ const props = defineProps({
     }
 });
 
+
+
 const order = props.orderInfo[0];
 
 const payment = {

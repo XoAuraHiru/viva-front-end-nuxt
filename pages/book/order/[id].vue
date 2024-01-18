@@ -1,11 +1,15 @@
 <script setup>
 import axios from 'axios';
+import { useActions } from "~/stores/useActions";
+
+const actions = useActions()
 
 useHead({
     script: [
         {
             src: 'https://www.payhere.lk/lib/payhere.js',
             type: 'text/javascript',
+            mode: 'client'
         }
     ]
 })
@@ -15,21 +19,17 @@ const { id } = route.params
 
 const order = ref([])
 
-await axios.get(`https://vivaapi.xoaurahiru.com/api/order/` + id)
-    .then(response => {
-        order.value = response.data.data
-        console.log(order.value);
-    })
-    .catch(error => {
-        console.log(error);
-    });
+await actions.getOrder(id).then((response) => {
+    console.log(response)
+    order.value = response
+})
 
 
 </script>
 
 <template>
     <div>
-        <BookOrder :orderInfo="order"/>
+        <BookOrder v-if="order" :orderInfo="order"/>
     </div>
 </template>
 

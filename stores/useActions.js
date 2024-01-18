@@ -12,6 +12,13 @@ export const useActions = defineStore('actions', () => {
     return data.value;
   }
 
+  async function getOrder(id){
+    const {data, error} = await useApiFetch("/api/order" + id, {
+      method: "GET",
+    });
+    return data.value;
+  }
+
   async function getSeats(){
     const {data, error} = await useApiFetch("/api/seats", {
       method: "GET",
@@ -26,5 +33,5 @@ export const useActions = defineStore('actions', () => {
     return data.value;
   }
 
-  return { createOrder, getSeats, getShow}
+  return { createOrder, getOrder, getSeats, getShow}
 })
