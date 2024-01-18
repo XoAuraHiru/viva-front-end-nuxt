@@ -35,7 +35,7 @@ onMounted(async () => {
 
     };
     
-    elements = stripe.elements({clientSecret, appearance});
+    elements = stripe.elements({clientSecret: clientSecret, appearance});
     const options = {
         layout: {
             type: 'tabs',
