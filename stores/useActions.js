@@ -13,7 +13,7 @@ export const useActions = defineStore('actions', () => {
   }
 
   async function getOrder(id){
-    const {data, error} = await useApiFetch("/api/order" + id, {
+    const {data, error} = await useApiFetch("/api/order/" + id, {
       method: "GET",
     });
     return data.value;

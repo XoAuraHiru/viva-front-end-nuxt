@@ -21,7 +21,7 @@ const order = ref([])
 
 await actions.getOrder(id).then((response) => {
     console.log(response)
-    order.value = response
+    order.value = response.data
 })
 
 
