@@ -1,52 +1,76 @@
 <script setup>
 import { loadStripe } from '@stripe/stripe-js';
-const user = useSanctumUser();
+import { useActions } from "~/stores/useActions";
 const props = defineProps({
     orderInfo: {
         type: Object,
         required: true
     }
 });
-
-const stripePromise = ref(null);
-const elements = ref(null);
-
-
+const actions = useActions();
 const order = props.orderInfo[0];
 
-onMounted(async () => {
-  const stripe = await loadStripe('pk_test_51OZb8EI084Bvf0eZOOw5VR4REyv9o3MbAVpFJ0SuSzKMj8whjoEpgOxz1dN5quwfutsmQbFZXaUqlztFfPwNpNjF00mzYfVtCG'); // Replace with your key
-  stripePromise.value = stripe;
+const isLoading = ref(false);
+const messages = ref([]);
 
-  elements.value = stripe.elements();
-  const cardElement = elements.value.create('card');
-  cardElement.mount('#card-element'); // Assuming you have an element with this ID
+let stripe = null;
+let elements = null;
+
+onMounted(async () => {
+
+    stripe = await loadStripe('pk_test_51OZb8EI084Bvf0eZOOw5VR4REyv9o3MbAVpFJ0SuSzKMj8whjoEpgOxz1dN5quwfutsmQbFZXaUqlztFfPwNpNjF00mzYfVtCG');
+    const { clientSecret, error: backendError } = await actions.getPaymentIntent(info).then((res) => res.json());
+    console.log(clientSecret, backendError)
+    const appearance = {
+
+    };
+    
+    elements = stripe.elements({clientSecret, appearance});
+    const options = {
+        layout: {
+            type: 'tabs',
+            defaultCollapsed: false,
+        }
+    };
+    const paymentElement = elements.create('payment', options);
+    paymentElement.mount('#payment-element');
+    const linkAuthenticationElement = elements.create('linkAuthentication');
+    linkAuthenticationElement.mount('#link-authentication-element');
+    isLoading.value = false;
 });
 
-// Example payment submission function
 const handleSubmit = async () => {
-  const stripe = await stripePromise.value;
-  const result = await stripe.confirmCardPayment('YOUR_CLIENT_SECRET', {
-    payment_method: {
-      card: cardElement,
-    },
-  });
+    if (isLoading.value) return;
 
-  if (result.error) {
-    // Handle card errors
-    console.error(result.error);
-  } else {
-    // Payment successful
-    console.log('Payment successful!');
-  }
+    isLoading.value = true;
+
+    try {
+        const { error } = await stripe.confirmPayment({
+            elements,
+            confirmParams: {
+                return_url: `${window.location.origin}/return`
+            }
+        });
+
+        if (error) {
+            messages.value.push(error.message);
+        } else {
+            // Handle successful payment
+            messages.value.push('Payment successful!');
+            // Redirect or handle success as needed
+        }
+    } catch (error) {
+        console.error('Unexpected error:', error);
+        messages.value.push('An unexpected error occurred.');
+    } finally {
+        isLoading.value = false;
+    }
 };
-
-
 
 </script>
 
 <template>
-    <div class="card__content mt-5 ">
+    <div class="card__content">
         <div class="card__body p-5">
             <a href="index.html" class="sign__logo card__top">
                 <img src="/img/logo.svg" alt="">
@@ -55,13 +79,15 @@ const handleSubmit = async () => {
             <h3 class="movie__title card__top">Order #{{ order.order_id }}</h3>
             <h3 class="movie__title card__top">Amount {{ order.amount }}</h3>
 
-            <span>{{ order }}</span>
-
-            <div class="card__top" id="card-element"></div>
-
-            <GeneralButtonFill class="mt-5 card__top" type="submit" id="payhere-payment">Pay Now</GeneralButtonFill>
+            <form class="card__top" id="payment-form" @submit.prevent="handleSubmit">
+                <div id="link-authentication-element"></div>
+                <div class="mt-4" id="payment-element"></div>
+                <GeneralButtonFill class="mt-4" id="submit">Pay Now</GeneralButtonFill>
+            </form>
 
         </div>
+
+
     </div>
 </template>
 
@@ -87,7 +113,8 @@ const handleSubmit = async () => {
     padding: 40px 20px;
     position: relative;
     width: 100%;
-    max-width: 480px;
+    max-width: 100%;
+    min-height: 100vh;
     border-radius: 8px;
     overflow: hidden;
 }
