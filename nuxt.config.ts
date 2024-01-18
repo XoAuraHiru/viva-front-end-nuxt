@@ -18,20 +18,7 @@ export default defineNuxtConfig({
           "content": "Online Movies, TV Shows & Cinema Booking"
         }
       ],
-      "link": [
-        {
-          rel: "icon",
-          type: "image/png",
-          href: "icon/favicon-32x32.png",
-          sizes: "32x32"
-        },
-        {
-          rel: "stylesheet",
-          href: "/css/bootstrap.min.css",
-        },
-      ]
     }
-
   },
 
   modules: [
@@ -56,6 +43,11 @@ export default defineNuxtConfig({
       options: {
 
       }
+    }
+  },
+  routeRules: {
+    'payhere': {
+        proxy: { to: "payhere.lk/**", },
     }
   }
   
