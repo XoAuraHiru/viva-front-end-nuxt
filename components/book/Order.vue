@@ -16,6 +16,15 @@ const messages = ref([]);
 let stripe = null;
 let elements = null;
 
+const info = {
+    amount: order.amount,
+    customer: order.customer_id,
+    metadata: {
+        orderID: order.order_id,
+        userID: order.customer_id,
+    }
+};
+
 onMounted(async () => {
 
     stripe = await loadStripe('pk_test_51OZb8EI084Bvf0eZOOw5VR4REyv9o3MbAVpFJ0SuSzKMj8whjoEpgOxz1dN5quwfutsmQbFZXaUqlztFfPwNpNjF00mzYfVtCG');
