@@ -4,16 +4,6 @@ import { useActions } from "~/stores/useActions";
 
 const actions = useActions()
 
-useHead({
-    script: [
-        {
-            src: 'https://www.payhere.lk/lib/payhere.js',
-            type: 'text/javascript',
-            mode: 'client'
-        }
-    ]
-})
-
 const route = useRoute()
 const { id } = route.params
 
