@@ -1,6 +1,7 @@
 <script setup>
 import { loadStripe } from '@stripe/stripe-js';
 import { useActions } from "~/stores/useActions";
+const user = useSanctumUser();
 const props = defineProps({
     orderInfo: {
         type: Object,
@@ -21,7 +22,7 @@ const info = {
     customer: order.customer_id,
     metadata: {
         orderID: order.order_id,
-        userID: order.customer_id,
+        userID: user.id,
     }
 };
 
