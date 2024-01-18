@@ -17,7 +17,7 @@ let stripe = null;
 let elements = null;
 
 const info = {
-    amount: order.amount,
+    amount: parseInt(order.amount),
     customer: order.customer_id,
     metadata: {
         orderID: order.order_id,
