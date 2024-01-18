@@ -20,6 +20,7 @@
   "dependencies": {
     "@formkit/auto-animate": "^0.8.1",
     "@splidejs/vue-splide": "^0.6.12",
+    "@stripe/stripe-js": "^2.3.0",
     "axios": "^1.6.5",
     "lottie-web": "^5.12.2",
     "pinia": "^2.1.7"

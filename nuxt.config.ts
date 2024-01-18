@@ -44,11 +44,5 @@ export default defineNuxtConfig({
 
       }
     }
-  },
-  routeRules: {
-    'payhere': {
-        proxy: { to: "payhere.lk/**", },
-    }
-  }
-  
+  },  
 })
