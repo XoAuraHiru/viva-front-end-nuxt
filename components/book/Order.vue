@@ -19,7 +19,7 @@ let elements = null;
 
 const info = {
     amount: parseInt(order.amount),
-    customer: order.customer_id,
+    customer: user.id,
     metadata: {
         orderID: order.order_id,
         userID: user.id,
@@ -32,7 +32,8 @@ onMounted(async () => {
     const { clientSecret, error: backendError } = await actions.getPaymentIntent(info).then((res) => res);
     console.log(clientSecret, backendError)
     const appearance = {
-
+        theme: 'flat',
+        variables: { colorPrimaryText: '#ff55a5' }
     };
     
     elements = stripe.elements({clientSecret, appearance});
