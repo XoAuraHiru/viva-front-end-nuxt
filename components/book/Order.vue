@@ -29,7 +29,7 @@ const info = {
 onMounted(async () => {
 
     stripe = await loadStripe('pk_test_51OZb8EI084Bvf0eZOOw5VR4REyv9o3MbAVpFJ0SuSzKMj8whjoEpgOxz1dN5quwfutsmQbFZXaUqlztFfPwNpNjF00mzYfVtCG');
-    const { clientSecret, error: backendError } = await actions.getPaymentIntent(info).then((res) => res.json());
+    const { clientSecret, error: backendError } = await actions.getPaymentIntent(info).then((res) => res.clientSecret);
     console.log(clientSecret, backendError)
     const appearance = {
 
