@@ -19,11 +19,8 @@ let elements = null;
 
 const info = {
     amount: parseInt(order.amount),
-    customer: user.id,
-    metadata: {
-        orderID: order.order_id,
-        userID: user.id,
-    }
+    orderID: order.order_id,
+    userID: user.id,
 };
 
 onMounted(async () => {
