@@ -29,8 +29,11 @@ onMounted(async () => {
     const { clientSecret, error: backendError } = await actions.getPaymentIntent(info).then((res) => res);
     console.log(clientSecret, backendError)
     const appearance = {
-        theme: 'flat',
-        variables: { colorPrimaryText: '#ff55a5' }
+        theme: 'night',
+        variables: { 
+            colorPrimaryText: '#ff55a5',
+            colorBackground: '#28282d',
+        }
     };
     
     elements = stripe.elements({clientSecret, appearance});
