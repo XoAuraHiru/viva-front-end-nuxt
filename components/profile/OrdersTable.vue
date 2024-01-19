@@ -59,7 +59,7 @@ const columns = [
 
                     <tr v-if="orders" v-for="order in orders">
                         <td>
-                            <div class="dashbox__table-text">{{order.id}}</div>
+                            <div class="dashbox__table-text">{{order.order_id}}</div>
                         </td>
                         <td>
                             <div class="dashbox__table-text"><a href="details1.html">The Lost
