@@ -64,11 +64,11 @@ async function confirmSeats() {
             seats: selectedSeats.value
         })
         
-        order_id.value = response.data.order_id
+        order_id.value = response.order_id
         console.log(order_id.value);
         orderCreated.value = true;
         setTimeout(() => {
-            router.push(`/book/order/${order_id.value}`)
+            router.push(`/book/order/` + order_id.value)
         }, 3000);
 
     } catch (error) {
@@ -124,7 +124,7 @@ async function confirmSeats() {
 
             <!-- end seats -->
 
-            <LottieLoading class="card__top" v-if="seatSelected" />
+            <LottieLoading class="card__top" v-if="seatSelected && !orderCreated" />
             <div class="card__top row d-flex justify-content-center" v-if="orderCreated">
                 <LottieDone class="" />
                 <h3 class="total__title" v-if="orderCreated">Order Created</h3>
