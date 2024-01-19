@@ -66,7 +66,7 @@ async function confirmSeats() {
 
         console.log(response);
         
-        order_id.value = response.order_id
+        order_id.value = response.data.order_id
         console.log(order_id);
         orderCreated.value = true;
         setTimeout(() => {
