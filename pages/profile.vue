@@ -2,6 +2,9 @@
 const { logout } = useSanctumAuth();
 const { capitalize } = useCapitalized();
 const user = useSanctumUser();
+import { useActions } from "~/stores/useActions";
+
+const actions = useActions()
 
 async function handleLogout() {
     await logout();
@@ -9,6 +12,10 @@ async function handleLogout() {
 }
 
 console.log(user)
+
+const orders = await actions.getUserOrders()
+
+console.log(orders)
 
 </script>
 
@@ -111,110 +118,7 @@ console.log(user)
 
                         <!-- dashbox -->
                         <div class="col-12 col-xl-6">
-                            <div class="dashbox">
-                                <div class="dashbox__title">
-                                    <h3><img src="/img/film.svg" alt="">Recent Views</h3>
-
-                                    <div class="dashbox__wrap">
-                                        <a class="dashbox__refresh" href="#"><svg xmlns="http://www.w3.org/2000/svg"
-                                                viewBox="0 0 24 24">
-                                                <path
-                                                    d="M21,11a1,1,0,0,0-1,1,8.05,8.05,0,1,1-2.22-5.5h-2.4a1,1,0,0,0,0,2h4.53a1,1,0,0,0,1-1V3a1,1,0,0,0-2,0V4.77A10,10,0,1,0,22,12,1,1,0,0,0,21,11Z" />
-                                            </svg></a>
-                                        <a class="dashbox__more" href="catalog.html">View All</a>
-                                    </div>
-                                </div>
-
-                                <div class="dashbox__table-wrap dashbox__table-wrap--1">
-                                    <table class="dashbox__table">
-                                        <thead>
-                                            <tr>
-                                                <th>ID</th>
-                                                <th>TITLE</th>
-                                                <th>CATEGORY</th>
-                                                <th>RATING</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>
-                                                    <div class="dashbox__table-text">321</div>
-                                                </td>
-                                                <td>
-                                                    <div class="dashbox__table-text"><a href="details1.html">The Lost
-                                                            City</a></div>
-                                                </td>
-                                                <td>
-                                                    <div class="dashbox__table-text">Movie</div>
-                                                </td>
-                                                <td>
-                                                    <div class="dashbox__table-text dashbox__table-text--rate">9.2</div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <div class="dashbox__table-text">54</div>
-                                                </td>
-                                                <td>
-                                                    <div class="dashbox__table-text"><a
-                                                            href="details1.html">Undercurrents</a></div>
-                                                </td>
-                                                <td>
-                                                    <div class="dashbox__table-text">Anime</div>
-                                                </td>
-                                                <td>
-                                                    <div class="dashbox__table-text dashbox__table-text--rate">9.1</div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <div class="dashbox__table-text">670</div>
-                                                </td>
-                                                <td>
-                                                    <div class="dashbox__table-text"><a href="details1.html">Tales from the
-                                                            Underworld</a></div>
-                                                </td>
-                                                <td>
-                                                    <div class="dashbox__table-text">TV Show</div>
-                                                </td>
-                                                <td>
-                                                    <div class="dashbox__table-text dashbox__table-text--rate">9.0</div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <div class="dashbox__table-text">241</div>
-                                                </td>
-                                                <td>
-                                                    <div class="dashbox__table-text"><a href="details1.html">The Unseen
-                                                            World</a></div>
-                                                </td>
-                                                <td>
-                                                    <div class="dashbox__table-text">TV Show</div>
-                                                </td>
-                                                <td>
-                                                    <div class="dashbox__table-text dashbox__table-text--rate">8.9</div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <div class="dashbox__table-text">22</div>
-                                                </td>
-                                                <td>
-                                                    <div class="dashbox__table-text"><a href="details1.html">Redemption
-                                                            Road</a></div>
-                                                </td>
-                                                <td>
-                                                    <div class="dashbox__table-text">Movie</div>
-                                                </td>
-                                                <td>
-                                                    <div class="dashbox__table-text dashbox__table-text--rate">8.9</div>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
+                            <ProfileOrdersTable :orders="orders.data"/>
                         </div>
                         <!-- end dashbox -->
 

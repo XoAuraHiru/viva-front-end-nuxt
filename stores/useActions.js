@@ -41,5 +41,12 @@ export const useActions = defineStore('actions', () => {
     return data.value;
   }
 
-  return { createOrder, getOrder, getSeats, getShow, getPaymentIntent}
+  async function getUserOrders(){
+    const {data, error} = await useApiFetch("/api/user/orders", {
+      method: "GET",
+    });
+    return data.value;
+  }
+
+  return { createOrder, getOrder, getSeats, getShow, getPaymentIntent, getUserOrders}
 })
