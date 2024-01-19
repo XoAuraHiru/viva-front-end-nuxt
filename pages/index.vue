@@ -34,9 +34,11 @@ onMounted(() => {
 <template>
   <div>
     <NuxtLoadingIndicator />
+  
     <SliderBase />
     <HomeContent />
     <HomeNowShowing />
+    
   </div>
 </template>
 

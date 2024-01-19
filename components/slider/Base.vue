@@ -16,15 +16,24 @@ const options = ref({
     arrows: 'slider'
 });
 
+const isLoading = ref(true);
+
 let latestMovies = ref([])
 
-await axios.get('https://xoaurahiru.com/api/movies/latest')
+async function fetchData(){
+    await axios.get('https://xoaurahiru.com/api/movies/latest')
     .then(response => {
         latestMovies.value = response.data.data
+        isLoading.value = false
     })
     .catch(error => {
         console.log(error);
     });
+}
+
+onMounted(() => {
+    fetchData()
+})
 </script>
 
 <template>
@@ -33,7 +42,8 @@ await axios.get('https://xoaurahiru.com/api/movies/latest')
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <Splide class="hero splide splide--hero" :options="{
+                    <SkeltonSlider v-if="isLoading"/>
+                    <Splide v-else class="hero splide splide--hero" :options="{
                         type: 'loop',
                         perPage: 1,
                         pagination: true,
