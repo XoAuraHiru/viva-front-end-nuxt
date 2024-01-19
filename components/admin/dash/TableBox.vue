@@ -28,7 +28,8 @@ const props = defineProps(['title', 'value', 'icon'])
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
+
+                        <tr v-for="i in 5">
                             <td>
                                 <div class="dashbox__table-text">321</div>
                             </td>
@@ -42,63 +43,7 @@ const props = defineProps(['title', 'value', 'icon'])
                                 <div class="dashbox__table-text dashbox__table-text--rate">9.2</div>
                             </td>
                         </tr>
-                        <tr>
-                            <td>
-                                <div class="dashbox__table-text">54</div>
-                            </td>
-                            <td>
-                                <div class="dashbox__table-text"><a href="#">Undercurrents</a></div>
-                            </td>
-                            <td>
-                                <div class="dashbox__table-text">Anime</div>
-                            </td>
-                            <td>
-                                <div class="dashbox__table-text dashbox__table-text--rate">9.1</div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="dashbox__table-text">670</div>
-                            </td>
-                            <td>
-                                <div class="dashbox__table-text"><a href="#">Tales from the Underworld</a>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="dashbox__table-text">TV Show</div>
-                            </td>
-                            <td>
-                                <div class="dashbox__table-text dashbox__table-text--rate">9.0</div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="dashbox__table-text">241</div>
-                            </td>
-                            <td>
-                                <div class="dashbox__table-text"><a href="#">The Unseen World</a></div>
-                            </td>
-                            <td>
-                                <div class="dashbox__table-text">TV Show</div>
-                            </td>
-                            <td>
-                                <div class="dashbox__table-text dashbox__table-text--rate">8.9</div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="dashbox__table-text">22</div>
-                            </td>
-                            <td>
-                                <div class="dashbox__table-text"><a href="#">Redemption Road</a></div>
-                            </td>
-                            <td>
-                                <div class="dashbox__table-text">Movie</div>
-                            </td>
-                            <td>
-                                <div class="dashbox__table-text dashbox__table-text--rate">8.9</div>
-                            </td>
-                        </tr>
+                        
                     </tbody>
                 </table>
             </div>
