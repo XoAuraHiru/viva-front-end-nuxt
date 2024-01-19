@@ -80,9 +80,9 @@ await axios.get('https://xoaurahiru.com/api/movies/latest')
                                         <a href="#">Comedy</a>
                                     </p>
                                     <div class="hero__actions">
-                                        <a :href="'/book/show/'+movie.shedule_id+''" class="hero__btn">
+                                        <nuxt-link :to="'/book/show/'+movie.shedule_id+''" class="hero__btn">
                                             <span>Book now</span>
-                                        </a>
+                                        </nuxt-link>
                                     </div>
                                 </div>
                             </div>
