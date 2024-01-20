@@ -18,7 +18,7 @@ const admin = useAdmin();
 async function deleteHandle() {
     isDeleting.value = true;
     try {
-        await admin.deleteOrder(orderID);
+        await admin.deleteOrder(props.orderID);
         emits('confirm');
         isDeleting.value = false;
         isCompleted.value = true;
