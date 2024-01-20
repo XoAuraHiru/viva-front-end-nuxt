@@ -17,5 +17,5 @@ export const useAdmin = defineStore('admin', () => {
         return data.value;
     }
 
-    return { getOrders }
+    return { getOrders, deleteOrder }
 })
