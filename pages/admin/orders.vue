@@ -1,6 +1,20 @@
 <script setup>
+import { useAdmin } from "~/stores/useAdmin";
 definePageMeta({
     layout: 'admin'
+})
+
+const admin = useAdmin()
+
+const orders = ref([])
+
+const getOrders = async () => {
+    const { data } = await admin.getOrders()
+    orders.value = data
+}
+
+onMounted(() => {
+    getOrders()
 })
 
 </script>
@@ -37,7 +51,7 @@ definePageMeta({
 				</div>
 				<!-- end main title -->
 
-				<AdminOrdersTable />
+				<AdminOrdersTable :orders="orders" />
 
 				<!-- paginator -->
 
@@ -46,6 +60,8 @@ definePageMeta({
 		</div>
 	</main>
 	<!-- end main content -->
+
+    
 
 </template>
 

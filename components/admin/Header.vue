@@ -1,3 +1,19 @@
+<script setup>
+onMounted(() => {
+    if (document.querySelector('.header')) {
+        const headerBtn = document.querySelector('.header__btn');
+        const headerNav = document.querySelector('.sidebar');
+
+        function toggleHeaderMenu() {
+            headerBtn.classList.toggle('header__btn--active');
+            headerNav.classList.toggle('sidebar--active');
+        }
+
+        headerBtn.addEventListener('click', toggleHeaderMenu);
+    }
+})
+</script>
+
 <template>
     <!-- header -->
     <div class="header">
