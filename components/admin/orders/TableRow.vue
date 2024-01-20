@@ -1,5 +1,3 @@
-
-import type OrderVue from '~/components/book/Order.vue';
 <script setup>
 defineProps({
     order: {

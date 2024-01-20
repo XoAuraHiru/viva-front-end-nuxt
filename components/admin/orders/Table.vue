@@ -1,4 +1,7 @@
+
+import type OrderVue from '~/components/book/Order.vue';
 <script setup>
+import { useAdmin } from "~/stores/useAdmin";
 
 const props = defineProps({
     orders: {
@@ -7,14 +10,21 @@ const props = defineProps({
     }
 })
 
-const deleteRowIndex = ref(null);
+const admin = useAdmin();
 
-const deleteTableRow = (index) => {
+const deleteRowIndex = ref({
+    value: null,
+    orderID: null
+});
+
+const deleteTableRow = (index, id) => {
     deleteRowIndex.value = index;
+    deleteRowIndex.orderID = id;
 };
 
 const confirmDelete = () => {
     if (deleteRowIndex.value !== null) {
+        await admin.deleteOrder(deleteRowIndex.orderID);
         props.orders.splice(deleteRowIndex.value, 1);
         deleteRowIndex.value = null;
     }
@@ -47,7 +57,7 @@ const confirmDelete = () => {
                         v-for="(order, index) in props.orders" 
                         :order="order" 
                         :key="index"
-                        @delete="deleteTableRow(index)"
+                        @delete="deleteTableRow(index, order.order_id)"
                     />
                 </tbody>
             </table>
