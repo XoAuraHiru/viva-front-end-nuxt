@@ -26,6 +26,11 @@ async function deleteHandle() {
         console.log(error);
     }
 }
+
+function clear() {
+    isCompleted.value = false;
+}
+
 </script>
 
 <template>
@@ -53,13 +58,13 @@ async function deleteHandle() {
 
                             <!-- loading -->
 
-                            <button v-if="isDeleting" @click="deleteHandle" class="modal__btn2 modal__btn--dismiss"
+                            <button v-if="isDeleting" class="modal__btn2 modal__btn--dismiss"
                                 type="button">
                                 <LottieDots class="col-6" />
                             </button>
 
                             <!-- completed -->
-                            <button v-if="isCompleted" @click="deleteHandle" class="modal__btn2 modal__btn--dismiss"
+                            <button v-if="isCompleted" @click="clear" class="modal__btn2 modal__btn--dismiss"
                                 type="button" data-bs-dismiss="modal">
                                 <span>Done</span>
                             </button>
