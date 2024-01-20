@@ -8,7 +8,7 @@ const admin = useAdmin()
 
 const orders = ref([])
 
-const getOrders = async () => {
+async function getOrders() {
     const { data } = await admin.getOrders()
     orders.value = data
 }
