@@ -22,15 +22,14 @@ const deleteTableRow = (index, id) => {
     deleteRowIndex.orderID = id;
 };
 
-const confirmDelete = () => {
-    if (deleteRowIndex.value !== null) {
-        await admin.deleteOrder(deleteRowIndex.orderID);
+async function confirmDelete() {
+    if (deleteRowIndex.value === null) return;
+    const { data } = await admin.deleteOrder(deleteRowIndex.orderID);
+    if (data) {
         props.orders.splice(deleteRowIndex.value, 1);
         deleteRowIndex.value = null;
     }
-};
-
-
+}
 
 </script>
 
