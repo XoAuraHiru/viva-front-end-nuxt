@@ -1,3 +1,5 @@
+
+import type OrderVue from '~/components/book/Order.vue';
 <script setup>
 defineProps({
     order: {
@@ -16,7 +18,7 @@ const emits = defineEmits(['delete'])
             <AdminCatalogText>{{ order.order_id }}</AdminCatalogText>
         </td>
         <td>
-            <AdminCatalogUser />
+            <AdminCatalogUser :email="order.user.email" :name="order.user.first_name"/>
         </td>
         <td>
             <AdminCatalogText>{{ new Date(order.created_at).toLocaleString('en-US', { timeZone: 'Asia/Kolkata' }) }}
