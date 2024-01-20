@@ -1,16 +1,10 @@
-
-import type OrderVue from '~/components/book/Order.vue';
 <script setup>
-import { useAdmin } from "~/stores/useAdmin";
-
 const props = defineProps({
     orders: {
         type: Array,
         default: []
     }
 })
-
-const admin = useAdmin();
 
 const deleteRowIndex = ref({
     value: null,
@@ -24,10 +18,15 @@ const deleteTableRow = (index, id) => {
 
 async function confirmDelete() {
     if (deleteRowIndex.value === null) return;
-    const { data } = await admin.deleteOrder(deleteRowIndex.orderID);
-    if (data) {
+    try {
         props.orders.splice(deleteRowIndex.value, 1);
+    }
+    catch (error) {
+        console.log(error);
+    }
+    finally {
         deleteRowIndex.value = null;
+        deleteRowIndex.orderID = null;
     }
 }
 
@@ -63,7 +62,7 @@ async function confirmDelete() {
         </div>
     </div>
     <!-- end users -->
-    <AdminOrdersDeleteModal @confirm="confirmDelete"/>
+    <AdminOrdersDeleteModal :id="deleteRowIndex.orderID" @confirm="confirmDelete"/>
 </template>
 
 <style lang="scss" scoped>

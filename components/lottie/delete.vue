@@ -6,7 +6,7 @@ onMounted(() => {
         container: animationElement.value,
         loop: true,
         autoplay: true,
-        path: '/lottie/done.json',
+        path: '/lottie/delete.json',
     });
 });
 </script>
