@@ -1,14 +1,16 @@
 
-import type { LottieDots } from '#build/components';
+import type loadingVue from '~/components/lottie/loading.vue';
 <script setup>
 import { useAdmin } from "~/stores/useAdmin";
 const emits = defineEmits(['confirm'])
 const props = defineProps({
-    id: {
+    orderID: {
         type: Number,
         default: 0
-    }
+    },
 })
+
+
 const isDeleting = ref(false);
 const isCompleted = ref(false);
 const admin = useAdmin();
@@ -16,7 +18,7 @@ const admin = useAdmin();
 async function deleteHandle() {
     isDeleting.value = true;
     try {
-        await admin.deleteOrder(props.id);
+        await admin.deleteOrder(orderID);
         emits('confirm');
         isDeleting.value = false;
         isCompleted.value = true;
@@ -35,16 +37,16 @@ async function deleteHandle() {
                     <form action="#" class="modal__form">
                         <h4 class="modal__title">Order delete</h4>
 
-                        <p class="modal__text">Are you sure to permanently delete this Order?</p>
+                        <p class="modal__text">Are you sure to permanently delete this Order #{{ orderID }}?</p>
 
                         <div class="col-9 d-flex justify-content-center w-100 mt-3">
                             <LottieDelete v-if="!isDeleting && !isCompleted" />
-                            <LottieDone v-if="isCompleted"/>
+                            <LottieDone v-if="isCompleted" />
                         </div>
 
                         <div class="modal__btns">
-                            <button v-if="!isDeleting && !isCompleted" @click="deleteHandle" class="modal__btn modal__btn--apply"
-                                type="button"><span>Delete</span></button>
+                            <button v-if="!isDeleting && !isCompleted" @click="deleteHandle"
+                                class="modal__btn modal__btn--apply" type="button"><span>Delete</span></button>
                             <button v-if="!isDeleting && !isCompleted" class="modal__btn modal__btn--dismiss" type="button"
                                 data-bs-dismiss="modal" aria-label="Close"><span>Dismiss</span>
                             </button>
@@ -172,4 +174,5 @@ async function deleteHandle() {
 
 .modal__btn--dismiss:hover {
     box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.15);
-}</style>
+}
+</style>

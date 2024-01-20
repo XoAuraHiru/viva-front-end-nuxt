@@ -11,9 +11,14 @@ const deleteRowIndex = ref({
     orderID: null
 });
 
+const selected = ref(0)
+
 const deleteTableRow = (index, id) => {
     deleteRowIndex.value = index;
     deleteRowIndex.orderID = id;
+    selected.value = id;
+    console.log(deleteRowIndex.orderID);
+    console.log(selected.value);
 };
 
 async function confirmDelete() {
@@ -62,7 +67,7 @@ async function confirmDelete() {
         </div>
     </div>
     <!-- end users -->
-    <AdminOrdersDeleteModal :id="deleteRowIndex.orderID" @confirm="confirmDelete"/>
+    <AdminOrdersDeleteModal :orderID="selected" @confirm="confirmDelete"/>
 </template>
 
 <style lang="scss" scoped>
