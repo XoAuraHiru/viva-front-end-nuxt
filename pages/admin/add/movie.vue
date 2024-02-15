@@ -26,36 +26,37 @@ function selectGenre(value) {
     console.log(genre.value)
 }
 
-async function handleAddMovie (){
-    const movie = {
-        name: name.value,
-        year: year.value,
-        description: description.value,
-        banner: cover.value,
-        genre: genre.value,
-    }
-    const {data} = await admin.addMovie(movie)
-
-    if(data){
-        name.value = ''
-        year.value = ''
-        description.value = ''
-        cover.value = ''
-        genre.value = ''
-    }
-
-    console.log(data)
-}
-
-
+let selectedFile = null;
 
 const uploadCover = (e) => {
-    const file = e.target.files[0]
-    const reader = new FileReader()
+    selectedFile = e.target.files[0]; 
+    const reader = new FileReader();
     reader.onload = (e) => {
-        cover.value = e.target.result
+        cover.value = e.target.result;
     }
-    reader.readAsDataURL(file)
+    reader.readAsDataURL(selectedFile);
+}
+
+async function handleAddMovie() {
+    const formData = new FormData();
+    formData.append('name', name.value);
+    formData.append('year', year.value);
+    formData.append('description', description.value);
+    formData.append('banner', selectedFile); 
+    formData.append('genre', genre.value);
+
+    const { data } = await admin.addMovie(formData); 
+
+    if (data) {
+        name.value = '';
+        year.value = '';
+        description.value = '';
+        cover.value = '';
+        genre.value = '';
+        selectedFile = null; 
+    }
+
+    console.log(data);
 }
 
 
@@ -69,7 +70,6 @@ onMounted(() => {
         });
     }
 
-    /* add page */
     if (document.querySelector('#sign__quality')) {
         new SlimSelect({
             select: '#sign__quality',
@@ -155,9 +155,9 @@ onMounted(() => {
                                             <div class="sign__gallery">
                                                 <label id="gallery1" for="sign__gallery-upload">Upload cover
                                                     (240x340)</label>
-                                                <input @change="uploadCover" data-name="#gallery1" id="sign__gallery-upload" name="gallery"
-                                                    class="sign__gallery-upload" type="file" accept=".png, .jpg, .jpeg"
-                                                    multiple="">
+                                                <input @change="uploadCover" data-name="#gallery1" id="sign__gallery-upload"
+                                                    name="gallery" class="sign__gallery-upload" type="file"
+                                                    accept=".png, .jpg, .jpeg" multiple="">
                                             </div>
                                         </div>
                                     </div>
@@ -183,7 +183,8 @@ onMounted(() => {
 
                                     <div class="col-12">
                                         <div class="sign__group">
-                                            <AdminSelect @Selected="selectGenre" :options="genres" v-model="genre" id="sign__genre" />
+                                            <AdminSelect @Selected="selectGenre" :options="genres" v-model="genre"
+                                                id="sign__genre" />
                                         </div>
                                     </div>
 
