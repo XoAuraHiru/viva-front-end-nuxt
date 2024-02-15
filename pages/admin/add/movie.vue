@@ -43,7 +43,16 @@ async function handleAddMovie() {
     formData.append('year', year.value);
     formData.append('description', description.value);
     formData.append('banner', selectedFile); 
-    formData.append('genre', genre.value);
+    
+    if (Array.isArray(genre.value)) {
+        genre.value.forEach((g, index) => {
+            formData.append(`genre[${index}]`, g);
+        });
+    } else {
+        formData.append('genre', genre.value);
+    }
+
+    console.log(formData);
 
     const { data } = await admin.addMovie(formData); 
 
