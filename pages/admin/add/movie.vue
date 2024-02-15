@@ -1,9 +1,63 @@
 <script setup>
 import { useAdmin } from "~/stores/useAdmin";
+import { useActions } from "~/stores/useActions";
 
 definePageMeta({
     layout: 'admin'
 })
+
+const name = ref('')
+const year = ref('')
+const description = ref('')
+const cover = ref('')
+const genre = ref([])
+const admin = useAdmin()
+const actions = useActions()
+const genres = ref([])
+
+await actions.getGenres().then(res => {
+    genres.value = res.data
+})
+
+
+
+function selectGenre(value) {
+    genre.value = value
+    console.log(genre.value)
+}
+
+async function handleAddMovie (){
+    const movie = {
+        name: name.value,
+        year: year.value,
+        description: description.value,
+        banner: cover.value,
+        genre: genre.value,
+    }
+    const {data} = await admin.addMovie(movie)
+
+    if(data){
+        name.value = ''
+        year.value = ''
+        description.value = ''
+        cover.value = ''
+        genre.value = ''
+    }
+
+    console.log(data)
+}
+
+
+
+const uploadCover = (e) => {
+    const file = e.target.files[0]
+    const reader = new FileReader()
+    reader.onload = (e) => {
+        cover.value = e.target.result
+    }
+    reader.readAsDataURL(file)
+}
+
 
 onMounted(() => {
     if (document.querySelector('#filter__sort')) {
@@ -61,44 +115,6 @@ onMounted(() => {
         });
     }
 })
-
-const name = ref('')
-const year = ref('')
-const description = ref('')
-const cover = ref('')
-const genre = ref('')
-const admin = useAdmin()
-
-
-async function handleAddMovie (){
-    const movie = {
-        name: name.value,
-        year: year.value,
-        description: description.value,
-        banner: cover.value,
-        genre: genre.value,
-    }
-    const {data} = await admin.addMovie(movie)
-
-    if(data){
-        name.value = ''
-        year.value = ''
-        description.value = ''
-        cover.value = ''
-        genre.value = ''
-    }
-
-    console.log(data)
-}
-
-const uploadCover = (e) => {
-    const file = e.target.files[0]
-    const reader = new FileReader()
-    reader.onload = (e) => {
-        cover.value = e.target.result
-    }
-    reader.readAsDataURL(file)
-}
 
 </script>
 
@@ -167,7 +183,7 @@ const uploadCover = (e) => {
 
                                     <div class="col-12">
                                         <div class="sign__group">
-                                            <AdminSelect v-model="genre" id="sign__genre" />
+                                            <AdminSelect @Selected="selectGenre" :options="genres" v-model="genre" id="sign__genre" />
                                         </div>
                                     </div>
 

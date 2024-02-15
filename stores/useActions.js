@@ -48,5 +48,19 @@ export const useActions = defineStore('actions', () => {
     return data.value;
   }
 
-  return { createOrder, getOrder, getSeats, getShow, getPaymentIntent, getUserOrders}
+  async function getGenres(){
+    const {data, error} = await useApiFetch("/api/genres", {
+      method: "GET",
+    });
+    return data.value;
+  }
+
+  return { 
+    createOrder, 
+    getOrder, 
+    getSeats, 
+    getShow, 
+    getPaymentIntent, 
+    getUserOrders, 
+    getGenres}
 })

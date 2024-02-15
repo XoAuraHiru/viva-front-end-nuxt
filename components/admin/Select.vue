@@ -1,18 +1,25 @@
+<script setup>
+const props = defineProps({
+    options: Array
+})
+
+const emit = defineEmits('selected')
+
+const selectedOptions = ref([])
+
+watch(() => selectedOptions.value, (value) => {
+    emit('selected', value)
+})
+
+</script>
+
 <template>
-    <select class="sign__selectjs" multiple>
-        <option value="Action">Action</option>
-        <option value="Animation">Animation</option>
-        <option value="Comedy">Comedy</option>
-        <option value="Crime">Crime</option>
-        <option value="Drama">Drama</option>
-        <option value="Fantasy">Fantasy</option>
-        <option value="Historical">Historical</option>
-        <option value="Horror">Horror</option>
-        <option value="Romance">Romance</option>
-        <option value="Science-fiction">Science-fiction</option>
-        <option value="Thriller">Thriller</option>
-        <option value="Western">Western</option>
-        <option value="Otheer">Otheer</option>
+    <select class="sign__selectjs" multiple v-model="selectedOptions">
+
+        <option v-for="option in props.options" :value="option.id" :key="option.id">
+            {{ option.genre }}
+        </option>
+
     </select>
 </template>
 
