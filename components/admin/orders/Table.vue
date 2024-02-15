@@ -1,3 +1,5 @@
+
+import type { AdminOrdersViewModal } from '#build/components';
 <script setup>
 const props = defineProps({
     orders: {
@@ -68,6 +70,7 @@ async function confirmDelete() {
     </div>
     <!-- end users -->
     <AdminOrdersDeleteModal :orderID="selected" @confirm="confirmDelete"/>
+    <AdminOrdersViewModal/>
 </template>
 
 <style lang="scss" scoped>
