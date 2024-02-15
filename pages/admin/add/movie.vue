@@ -1,4 +1,6 @@
 <script setup>
+import { useAdmin } from "~/stores/useAdmin";
+
 definePageMeta({
     layout: 'admin'
 })
@@ -65,17 +67,28 @@ const year = ref('')
 const description = ref('')
 const cover = ref('')
 const genre = ref('')
+const admin = useAdmin()
 
 
-const handleAddMovie = () => {
+async function handleAddMovie (){
     const movie = {
         name: name.value,
         year: year.value,
         description: description.value,
-        cover: cover.value,
+        banner: cover.value,
         genre: genre.value,
     }
-    console.log(movie)
+    const {data} = await admin.addMovie(movie)
+
+    if(data){
+        name.value = ''
+        year.value = ''
+        description.value = ''
+        cover.value = ''
+        genre.value = ''
+    }
+
+    console.log(data)
 }
 
 const uploadCover = (e) => {

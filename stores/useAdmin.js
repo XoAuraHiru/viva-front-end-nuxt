@@ -17,5 +17,13 @@ export const useAdmin = defineStore('admin', () => {
         return data.value;
     }
 
-    return { getOrders, deleteOrder }
+    async function addMovie(movie) {
+        const { data, error } = await useApiFetch("/api/admin/movie/add", {
+            method: "POST",
+            body: JSON.stringify(movie),
+        });
+        return data.value;
+    }
+
+    return { getOrders, deleteOrder, addMovie }
 })
