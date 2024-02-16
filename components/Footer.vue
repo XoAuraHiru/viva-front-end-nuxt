@@ -99,8 +99,8 @@
                 <!-- footer copyright -->
                 <div class="col-12">
                     <div class="footer__copyright">
-                        <small>© FlixGo, 2018—2023. Create by <a href="https://themeforest.net/user/dmitryvolkov/portfolio"
-                                target="_blank" rel="noopener">Dmitry Volkov</a>.</small>
+                        <small>© FlixGo, 2023. Create by <a href="https://themeforest.net/user/dmitryvolkov/portfolio"
+                                target="_blank" rel="noopener">XoAuraHiru</a>.</small>
 
                         <ul>
                             <li><a href="privacy.html">Privacy policy</a></li>
