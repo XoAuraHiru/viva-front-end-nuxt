@@ -11,9 +11,7 @@
                     <div class="footer__logo">
                         <img src="/images/logo.svg" alt="">
                     </div>
-                    <p class="footer__tagline">Movies & TV Shows, Online cinema,<br> Movie database HTML Template. <br>The
-                        perfect choice for your project.</p>
-
+                    <p class="footer__tagline">Online Cinema Booking App.</p>
                     <ul class="footer__social">
                         <li><a href="#"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                                     <path
