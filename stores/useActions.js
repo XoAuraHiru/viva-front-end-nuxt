@@ -55,7 +55,7 @@ export const useActions = defineStore('actions', () => {
     return data.value;
   }
 
-  async function getMovieByID(id){
+  async function getMovieByID(){
     const {data, error} = await useApiFetch("api/movies/individual/20", {
       method: "GET",
     });

@@ -8,16 +8,15 @@ const { id } = route.params
 const movie = ref()
 const isLoading = ref(false)
 
-
-onMounted(async () => {
+async function getMovie(id) {
     isLoading.value = true
-    const data = await actions.getMovieByID(id)
-    movie.value = data
+    movie.value = await actions.getMovieByID(id)
     isLoading.value = false
-    console.log(data)
+}
+
+onMounted(() => {
+    getMovie(id)
 })
-
-
 
 </script>
 
