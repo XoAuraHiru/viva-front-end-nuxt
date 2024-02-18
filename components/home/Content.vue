@@ -5,7 +5,7 @@ let NewMovies = ref([]);
 let AllMovies = ref([]);
 let isLoading = ref(true)
 
-await axios.get('https://xoaurahiru.com/api/movies/new')
+await axios.get('https://vivaapi.xoaurahiru.com/api/movies/new')
     .then(response => {
         NewMovies.value = response.data.data
         isLoading.value = false
@@ -14,7 +14,7 @@ await axios.get('https://xoaurahiru.com/api/movies/new')
         console.log(error);
     });
 
-await axios.get('https://xoaurahiru.com/api/movies')
+await axios.get('https://vivaapi.xoaurahiru.com/api/movies')
     .then(response => {
         AllMovies.value = response.data.data
     })
