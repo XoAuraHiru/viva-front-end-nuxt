@@ -57,7 +57,7 @@ const handleSeatUnchecked = (id, price) => {
 
 async function confirmSeats() {
     seatSelected.value = true;
-    const order_id = ref();
+    const order_no = ref();
     try {
         const response = await actions.createOrder({
             show_id: showId,
@@ -66,11 +66,11 @@ async function confirmSeats() {
 
         console.log(response);
         
-        order_id.value = response.data.order_id
+        order_no.value = response.data.order_no
         console.log(order_id);
         orderCreated.value = true;
         setTimeout(() => {
-            router.push(`/book/order/${order_id.value}`)
+            router.push(`/book/order/${order_no.value}`)
         }, 3000);
 
     } catch (error) {

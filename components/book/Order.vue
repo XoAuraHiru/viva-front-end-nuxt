@@ -87,7 +87,7 @@ const handleSubmit = async () => {
                 <img src="/img/logo.svg" alt="">
             </a>
 
-            <h3 class="movie__title card__top">Order #{{ order.order_id }}</h3>
+            <h3 class="movie__title card__top">Order #{{ order.order_no }}</h3>
             <h3 class="movie__title card__top">Amount {{ order.amount }}</h3>
 
             <form class="card__top" id="payment-form" @submit.prevent="handleSubmit">
