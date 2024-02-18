@@ -2,11 +2,11 @@ import { useRequestHeaders } from "nuxt/app";
 import dotenv from 'dotenv';
 
 export function useApiFetch(path, options = {}) {
-    const apiUrl = "https://vivaapi.xoaurahiru.com";
+    const apiUrl = process.env.API_URL;
 
     let headers = {
         accept: "application/json",
-        referer: "https://vivafront.xoaurahiru.com"
+        referer: process.env.APP_URL
     }
 
     const token = useCookie('XSRF-TOKEN');
