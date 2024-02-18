@@ -1,6 +1,7 @@
 <script setup>
-import axios from 'axios';
+import { useActions } from "~/stores/useActions";
 
+const actions = useActions()
 
 const route = useRoute()
 const { id } = route.params
@@ -10,10 +11,10 @@ const isLoading = ref(false)
 
 onMounted(async () => {
     isLoading.value = true
-    const { data } = await axios.get(`http://localhost:8000/api/movies/individual/${id}`)
-    movie.value = data.data[0]
+    const data = await actions.getMovieByID(id)
+    movie.value = data
     isLoading.value = false
-    console.log(movie.value)
+    console.log(data)
 })
 
 

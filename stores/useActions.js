@@ -55,6 +55,13 @@ export const useActions = defineStore('actions', () => {
     return data.value;
   }
 
+  async function getMovieByID(id){
+    const {data, error} = await useApiFetch("api/movies/individual/" + id, {
+      method: "GET",
+    });
+    return data.value;
+  }
+
   return { 
     createOrder, 
     getOrder, 
@@ -62,5 +69,7 @@ export const useActions = defineStore('actions', () => {
     getShow, 
     getPaymentIntent, 
     getUserOrders, 
-    getGenres}
+    getGenres,
+    getMovieByID,
+  }
 })
