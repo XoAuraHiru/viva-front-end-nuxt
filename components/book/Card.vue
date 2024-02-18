@@ -67,7 +67,6 @@ async function confirmSeats() {
         console.log(response);
         
         order_no.value = response.data.order_no
-        console.log(order_id);
         orderCreated.value = true;
         setTimeout(() => {
             router.push(`/book/order/${order_no.value}`)
