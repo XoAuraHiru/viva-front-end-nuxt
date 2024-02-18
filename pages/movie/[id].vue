@@ -1,18 +1,29 @@
 <script setup>
 import { useActions } from "~/stores/useActions";
+import axios from 'axios';
 
 const actions = useActions()
 
 const route = useRoute()
 const { id } = route.params
 const movie = ref()
-const isLoading = ref(false)
+const isLoading = ref(true)
 
 async function getMovie(id) {
-    isLoading.value = true
-    movie.value = await actions.getMovieByID(id)
-    console.log(movie.value)
-    isLoading.value = false
+    // isLoading.value = true
+    // movie.value = await actions.getMovieByID(id)
+    // console.log(movie.value)
+    // isLoading.value = false
+
+    await axios.get('https://vivaapi.xoaurahiru.com/api/movies/individual/' + id)
+    .then(response => {
+        movie.value = response.data.data
+        isLoading.value = false
+        console.log(movie.value)
+    })
+    .catch(error => {
+        console.log(error);
+    });
 }
 
 onMounted(() => {
