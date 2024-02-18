@@ -39,7 +39,7 @@ onMounted(() => {
             <div v-if="isLoading" class="row">
                 <LottieLoading style="height: 400px;" />
             </div>
-            <MovieDetails v-if="!isLoading && movie" :movie="movie" />
+            <MovieDetails v-if="!isLoading && movie" :movie="movie[0]" />
         </div>
     </section>
 </template>
