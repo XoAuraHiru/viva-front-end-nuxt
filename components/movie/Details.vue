@@ -36,7 +36,7 @@ onMounted(() => {
                 <!-- card content -->
                 <div class="item__content">
                     <div class="item__wrap">
-                        <span class="item__rate">{{movie.rating}}</span>
+                        <span class="item__rate">{{ movie.rating }}</span>
 
                         <ul class="item__list">
                             <li>Full HD</li>
@@ -45,7 +45,7 @@ onMounted(() => {
                     </div>
 
                     <ul class="item__meta">
-                        <li><span>Genre:</span> <a href="#">{{movie.genre.genre}}</a> <a href="#">Triler</a></li>
+                        <li><span>Genre:</span> <a href="#">{{ movie.genre.genre }}</a> <a href="#">Triler</a></li>
                         <li><span>Running time:</span> 120 min</li>
                         <li><span>Country:</span> <a href="#">USA</a></li>
                         <li><span>Premiere:</span> 05.02.2023</li>
@@ -67,10 +67,12 @@ onMounted(() => {
         </div>
         <!-- end content -->
 
+        <div class="col-12 col-xl-6">
+            <MovieTimeTable />
+        </div>
+
 
     </div>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>
