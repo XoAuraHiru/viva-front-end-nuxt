@@ -7,7 +7,7 @@ const props = defineProps({
 <template>
     <div class="col-6 col-sm-12 col-lg-6 col-xxl-4">
         <div class="item item--list">
-            <nuxt-link :to="'/movie/' + movie.id" class="item__cover">
+            <nuxt-link :to="'/movie/' + movie.code" class="item__cover">
                 <img class="object-fit-cover" :src="'https://xoaurahiru.com/' + movie.banner_img" alt="">
                 <span class="item__play">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
