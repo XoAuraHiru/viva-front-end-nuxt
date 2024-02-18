@@ -11,6 +11,7 @@ const isLoading = ref(false)
 async function getMovie(id) {
     isLoading.value = true
     movie.value = await actions.getMovieByID(id)
+    console.log(movie.value)
     isLoading.value = false
 }
 
