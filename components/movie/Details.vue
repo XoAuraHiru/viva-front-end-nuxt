@@ -45,7 +45,7 @@ onMounted(() => {
                     </div>
 
                     <ul class="item__meta">
-                        <li><span>Genre:</span> <a href="#">{{movie}}</a> <a href="#">Triler</a></li>
+                        <li><span>Genre:</span> <a href="#">{{movie.genre.genre}}</a> <a href="#">Triler</a></li>
                         <li><span>Running time:</span> 120 min</li>
                         <li><span>Country:</span> <a href="#">USA</a></li>
                         <li><span>Premiere:</span> 05.02.2023</li>
